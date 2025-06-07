@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: healthCheck_API
+
+  datasource:
+    url: jdbc:mysql://localhost:3307/mydb?useTimezone=true&serverTimezone=UTC
+    username: user
+    password: pass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 8080
