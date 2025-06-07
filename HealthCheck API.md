@@ -172,29 +172,6 @@ A **HealthCheck API** é uma API REST construída com Java e Spring Boot, focada
 - ativo (boolean)
 
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  @NotNull(message = "Name cannot be null")
-  @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
-  private String name;
-  
-  @Column(unique = true, nullable = false)
-  @NotNull(message = "National ID cannot be null")
-  @Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}", message = "Invalid CPF format")
-  private String nationalId;
-  
-  @Pattern(regexp = "\\+?\\d{2}\\s?\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}", message = "Invalid phone format")
-  private String phone;
-  
-  @NotNull(message = "Status cannot be null")
-  @Enumerated(EnumType.STRING)
-  private UserState status;
-
-
-
-
 ### 📅 Consulta (`Appointment`)
 
 - id
@@ -208,7 +185,51 @@ A **HealthCheck API** é uma API REST construída com Java e Spring Boot, focada
 - status (enum: AGENDADA, CANCELADA)
     
 - motivo_cancelamento (nullable)
-    
+
+---
+
+
+✅ DTOs de Usuário (User) - para autenticação e segurança
+
+    UserRegisterDTO – para cadastro de usuário.
+
+    UserLoginDTO – para login.
+
+    UserResponseDTO – para retornar dados públicos (como id, username, role).
+
+    TokenResponseDTO – para retornar o JWT após login.
+
+✅ DTOs de Paciente (Patient)
+
+    PatientCreateDTO – para cadastro de novo paciente.
+
+    PatientUpdateDTO – para atualização de dados.
+
+    PatientResponseDTO – para exibir dados do paciente.
+
+✅ DTOs de Médico (Doctor)
+
+    DoctorCreateDTO – para cadastro de médico (incluindo especialidade e agenda).
+
+    DoctorUpdateDTO – para atualizar dados (como disponibilidade).
+
+    DoctorResponseDTO – para exibir dados do médico.
+
+    DoctorAvailabilityDTO – para exibir os horários disponíveis para consulta.
+
+✅ DTOs de Consulta (Appointment)
+
+    AppointmentRequestDTO – para o paciente solicitar agendamento (escolher médico, data/hora).
+
+    AppointmentApprovalDTO – para o médico aceitar ou recusar.
+
+    AppointmentCancelDTO – para cancelar com antecedência (validando a regra de 2 dias).
+
+    AppointmentResponseDTO – para retornar dados da consulta (incluindo status, médico, paciente).
+
+    AppointmentReportDTO – usado pelo médico para gerar relatório (em PDF) após a consulta.
+
+
 
 ---
 

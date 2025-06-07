@@ -1,11 +1,13 @@
 package com.santt4na.health_check.entity;
 
+
 import com.santt4na.health_check.entity.security.User;
 import com.santt4na.health_check.enums.Gender;
 import com.santt4na.health_check.enums.Roles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
@@ -16,6 +18,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Patient extends User {
 	
@@ -45,7 +48,4 @@ public class Patient extends User {
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Appointment> appointments = new ArrayList<>();
 	
-	public Patient() {
-		setRole(Roles.PATIENT);
-	}
 }

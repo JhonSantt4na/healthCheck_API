@@ -1,7 +1,5 @@
 package com.santt4na.health_check.entity.security;
 
-import com.santt4na.health_check.entity.Doctor;
-import com.santt4na.health_check.entity.Patient;
 import com.santt4na.health_check.enums.Roles;
 import com.santt4na.health_check.enums.UserState;
 import jakarta.persistence.*;
@@ -53,4 +51,5 @@ public class User {
 	private LocalDateTime updatedAt;
 	
 	private boolean accountActive;
+	
 }

@@ -17,6 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Doctor extends User {
 	
@@ -43,8 +44,4 @@ public class Doctor extends User {
 	
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Appointment> appointments = new ArrayList<>();
-	
-	public Doctor() {
-		setRole(Roles.DOCTOR);
-	}
 }
