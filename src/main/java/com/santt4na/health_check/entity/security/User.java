@@ -3,7 +3,6 @@ package com.santt4na.health_check.entity.security;
 import com.santt4na.health_check.enums.Roles;
 import com.santt4na.health_check.enums.UserState;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "user_db")
 public class User {
 	
@@ -52,4 +50,14 @@ public class User {
 	
 	private boolean accountActive;
 	
+	public User(Long id, String email, String password, Roles role, UserState status, LocalDateTime createdAt, LocalDateTime updatedAt, boolean accountActive) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.status = status;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.accountActive = accountActive;
+	}
 }

@@ -4,6 +4,7 @@ import com.santt4na.health_check.entity.security.User;
 import com.santt4na.health_check.enums.Gender;
 import com.santt4na.health_check.enums.Roles;
 import com.santt4na.health_check.enums.Specialty;
+import com.santt4na.health_check.enums.UserState;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +42,18 @@ public class Doctor extends User {
 	@Column(unique = true, nullable = false)
 	@NotNull(message = "Medical license cannot be null")
 	@Pattern(regexp = "\\d{1,6}-[A-Z]{2}", message = "Medical license must follow the format 123456-UF")
-	private String medicalLicense;
+	private String medicalLicense; // CRM
 	
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Appointment> appointments = new ArrayList<>();
+	
+	public Doctor(Long id, String email, String password, Roles role, UserState status, LocalDateTime createdAt, LocalDateTime updatedAt, boolean accountActive, String name, String phone, Specialty specialty, Gender gender, String medicalLicense, List<Appointment> appointments) {
+		super(id, email, password, role, status, createdAt, updatedAt, accountActive);
+		this.name = name;
+		this.phone = phone;
+		this.specialty = specialty;
+		this.gender = gender;
+		this.medicalLicense = medicalLicense;
+		this.appointments = appointments;
+	}
 }

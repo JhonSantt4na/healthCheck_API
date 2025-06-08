@@ -1,9 +1,7 @@
 package com.santt4na.health_check.entity;
 
-import com.santt4na.health_check.entity.security.User;
 import com.santt4na.health_check.enums.AppointmentStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +16,6 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 public class Appointment{
 	
 	@Id
@@ -52,4 +49,16 @@ public class Appointment{
 	
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
+	
+	public Appointment(Long id, LocalDateTime appointmentDate, Integer duration, String reason, Patient patient, Doctor doctor, AppointmentStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		this.id = id;
+		this.appointmentDate = appointmentDate;
+		this.duration = duration;
+		this.reason = reason;
+		this.patient = patient;
+		this.doctor = doctor;
+		this.status = status;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 }
