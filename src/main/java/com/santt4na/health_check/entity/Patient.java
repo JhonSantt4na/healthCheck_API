@@ -1,6 +1,5 @@
 package com.santt4na.health_check.entity;
 
-
 import com.santt4na.health_check.entity.security.User;
 import com.santt4na.health_check.enums.Gender;
 import com.santt4na.health_check.enums.Roles;

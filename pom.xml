@@ -21,6 +21,7 @@
 		<lombok-version>1.18.38</lombok-version>
 		<org.mapstruct.version>1.6.3</org.mapstruct.version>
 		<mysql-version>9.1.0</mysql-version>
+		<log4j-version>2.3.2</log4j-version>
 	</properties>
 
 	<dependencies>
@@ -51,6 +52,18 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${lombok-version}</version>
+		</dependency>
+
+		<!-- log4j -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j2.version}</version>
 		</dependency>
 
 		<!-- Starter -->
