@@ -20,5 +20,4 @@ public interface DoctorService {
 	void deleteDoctor(Long id);
 	
 	List<Appointment> getDoctorAppointments(Long doctorId);
-	
 }
