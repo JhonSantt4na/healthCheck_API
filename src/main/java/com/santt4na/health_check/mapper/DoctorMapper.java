@@ -21,7 +21,6 @@ public interface DoctorMapper {
 	@Mapping(target = "appointments", ignore = true)
 	Doctor createToEntity(DoctorCreateDTO doctorCreateDTO);
 	
-	
 	@Mapping(target = "updatedAt", ignore = true)
 	@Mapping(target = "status", ignore = true)
 	@Mapping(target = "specialty", ignore = true)
@@ -36,7 +35,7 @@ public interface DoctorMapper {
 	@Mapping(target = "createdAt", ignore = true)
 	@Mapping(target = "appointments", ignore = true)
 	@Mapping(target = "accountActive", ignore = true)
-	Doctor availabilittyToEntity(DoctorAvailabilityDTO doctorAvailabilityDTO);
+	Doctor availabilityToEntity(DoctorAvailabilityDTO doctorAvailabilityDTO);
 	
 	@Mapping(target = "updatedAt", ignore = true)
 	@Mapping(target = "role", ignore = true)

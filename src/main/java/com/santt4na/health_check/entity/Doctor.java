@@ -15,12 +15,9 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Doctor extends User {
 	
 	@NotNull(message = "Name cannot be null")
@@ -47,6 +44,9 @@ public class Doctor extends User {
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Appointment> appointments = new ArrayList<>();
 	
+	public Doctor() {
+	}
+	
 	public Doctor(Long id, String email, String password, Roles role, UserState status, LocalDateTime createdAt, LocalDateTime updatedAt, boolean accountActive, String name, String phone, Specialty specialty, Gender gender, String medicalLicense, List<Appointment> appointments) {
 		super(id, email, password, role, status, createdAt, updatedAt, accountActive);
 		this.name = name;
@@ -55,5 +55,65 @@ public class Doctor extends User {
 		this.gender = gender;
 		this.medicalLicense = medicalLicense;
 		this.appointments = appointments;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	public Specialty getSpecialty() {
+		return specialty;
+	}
+	
+	public void setSpecialty(Specialty specialty) {
+		this.specialty = specialty;
+	}
+	
+	public Gender getGender() {
+		return gender;
+	}
+	
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+	
+	public String getMedicalLicense() {
+		return medicalLicense;
+	}
+	
+	public void setMedicalLicense(String medicalLicense) {
+		this.medicalLicense = medicalLicense;
+	}
+	
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+	
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		Doctor doctor = (Doctor) o;
+		return Objects.equals(name, doctor.name) && Objects.equals(phone, doctor.phone) && specialty == doctor.specialty && gender == doctor.gender && Objects.equals(medicalLicense, doctor.medicalLicense) && Objects.equals(appointments, doctor.appointments);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, phone, specialty, gender, medicalLicense, appointments);
 	}
 }

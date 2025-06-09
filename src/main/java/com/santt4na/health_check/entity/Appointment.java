@@ -2,20 +2,15 @@ package com.santt4na.health_check.entity;
 
 import com.santt4na.health_check.enums.AppointmentStatus;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-@Getter
-@Setter
 @Entity
-@NoArgsConstructor
 public class Appointment{
 	
 	@Id
@@ -50,6 +45,9 @@ public class Appointment{
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 	
+	public Appointment() {
+	}
+	
 	public Appointment(Long id, LocalDateTime appointmentDate, Integer duration, String reason, Patient patient, Doctor doctor, AppointmentStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
 		this.id = id;
 		this.appointmentDate = appointmentDate;
@@ -60,5 +58,89 @@ public class Appointment{
 		this.status = status;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public LocalDateTime getAppointmentDate() {
+		return appointmentDate;
+	}
+	
+	public void setAppointmentDate(LocalDateTime appointmentDate) {
+		this.appointmentDate = appointmentDate;
+	}
+	
+	public Integer getDuration() {
+		return duration;
+	}
+	
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
+	
+	public String getReason() {
+		return reason;
+	}
+	
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	
+	public Patient getPatient() {
+		return patient;
+	}
+	
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+	
+	public Doctor getDoctor() {
+		return doctor;
+	}
+	
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+	
+	public AppointmentStatus getStatus() {
+		return status;
+	}
+	
+	public void setStatus(AppointmentStatus status) {
+		this.status = status;
+	}
+	
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+	
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+	
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+	
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		Appointment that = (Appointment) o;
+		return Objects.equals(id, that.id) && Objects.equals(appointmentDate, that.appointmentDate) && Objects.equals(duration, that.duration) && Objects.equals(reason, that.reason) && Objects.equals(patient, that.patient) && Objects.equals(doctor, that.doctor) && status == that.status && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, appointmentDate, duration, reason, patient, doctor, status, createdAt, updatedAt);
 	}
 }

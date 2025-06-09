@@ -356,3 +356,25 @@ Este projeto será um grande diferencial no seu portfólio como Júnior ou Estag
     
 
 ---
+
+<!---  Níveis de Log:
+
+- audit: Para logs de auditoria (ex.: criação de `Doctor`).
+- com.example: Para o pacote do projeto, com nível `DEBUG` para detalhes.
+- root: Logger padrão com nível `INFO`.
+
+logger.trace(): Detalhes muito específicos (raramente usado).
+logger.debug(): Informações de depuração (ex.: parâmetros recebidos).
+logger.info(): Eventos importantes (ex.: sucesso na criação de um Doctor).
+logger.warn(): Situações anormais, mas não críticas (ex.: email duplicado).
+logger.error(): Erros graves (ex.: falha inesperada).
+
+Para depuração durante o desenvolvimento (nível DEBUG).
+Para monitoramento em produção (níveis INFO, WARN, ERROR).
+Para registrar erros que precisam de investigação (nível ERROR)
+
+AUDID Apenas Info:
+
+private static final Logger auditLogger = LoggerFactory.getLogger("audit");
+private static final Logger logger = LoggerFactory.getLogger(Startup.class);
+-->
