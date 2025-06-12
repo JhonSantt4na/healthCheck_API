@@ -17,91 +17,95 @@ import java.util.List;
 
 public interface PatientControllerDocs {
 	
-	@Operation(summary = "Find All Patient",
-		description = "Find All Patient",
+	@Operation(
+		summary = "Retrieve all patients",
+		description = "Returns a list of all registered patients.",
 		tags = {"Patient"},
 		responses = {
 			@ApiResponse(
-				description = "Success",
 				responseCode = "200",
-				content = {
-					@Content(
-						mediaType = MediaType.APPLICATION_JSON_VALUE,
-						array = @ArraySchema(schema = @Schema(implementation = PatientResponseDTO.class))
-					)
-				}
+				description = "Patients retrieved successfully",
+				content = @Content(
+					mediaType = MediaType.APPLICATION_JSON_VALUE,
+					array = @ArraySchema(schema = @Schema(implementation = PatientResponseDTO.class))
+				)
 			),
-			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-			@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-		})
+			@ApiResponse(responseCode = "204", description = "No patients found", content = @Content),
+			@ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+			@ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+		}
+	)
 	ResponseEntity<List<PatientResponseDTO>> findAll();
 	
-	@Operation(summary = "Finds a Patient",
-		description = "Find a specific Patient by your ID",
+	@Operation(
+		summary = "Retrieve a patient by ID",
+		description = "Returns the details of a patient by their ID.",
 		tags = {"Patient"},
 		responses = {
 			@ApiResponse(
-				description = "Success",
 				responseCode = "200",
+				description = "Patient retrieved successfully",
 				content = @Content(schema = @Schema(implementation = PatientResponseDTO.class))
 			),
-			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-			@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-		})
+			@ApiResponse(responseCode = "204", description = "No content", content = @Content),
+			@ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+			@ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Patient not found", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+		}
+	)
 	ResponseEntity<PatientResponseDTO> findById(@PathVariable("id") Long id);
 	
-	@Operation(summary = "Adds a new Patient",
-		description = "Adds a new Patient by passing in a JSON,representation of the Patient.",
+	@Operation(
+		summary = "Create a new patient",
+		description = "Registers a new patient using the provided data.",
 		tags = {"Patient"},
 		responses = {
 			@ApiResponse(
-				description = "Success",
-				responseCode = "200",
+				responseCode = "201",
+				description = "Patient created successfully",
 				content = @Content(schema = @Schema(implementation = PatientResponseDTO.class))
 			),
-			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-		})
-	ResponseEntity<PatientResponseDTO> create(@RequestBody PatientCreateDTO person);
+			@ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content),
+			@ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+		}
+	)
+	ResponseEntity<PatientResponseDTO> create(@RequestBody PatientCreateDTO patient);
 	
-	@Operation(summary = "Updated a Patient`s information",
-		description = "Updated a specific Patient by your ID",
+	@Operation(
+		summary = "Update a patient's information",
+		description = "Updates an existing patient's details by their ID.",
 		tags = {"Patient"},
 		responses = {
 			@ApiResponse(
-				description = "Success",
 				responseCode = "200",
+				description = "Patient updated successfully",
 				content = @Content(schema = @Schema(implementation = PatientResponseDTO.class))
 			),
-			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-			@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-		})
-	ResponseEntity<PatientResponseDTO> update(@RequestBody PatientUpdateDTO person);
+			@ApiResponse(responseCode = "204", description = "No content", content = @Content),
+			@ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content),
+			@ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Patient not found", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+		}
+	)
+	ResponseEntity<PatientResponseDTO> update(@PathVariable("id") Long id, @RequestBody PatientUpdateDTO patient);
 	
-	@Operation(summary = "Delete a Patient",
-		description = "Deletes a specific Patient by their ID",
+	@Operation(
+		summary = "Delete a patient",
+		description = "Deletes a patient by their ID.",
 		tags = {"Patient"},
 		responses = {
-			@ApiResponse(
-				description = "Success",
-				responseCode = "200",
-				content = @Content(schema = @Schema(implementation = PatientResponseDTO.class))
-			),
-			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-			@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-		})
+			@ApiResponse(responseCode = "200", description = "Patient deleted successfully", content = @Content),
+			@ApiResponse(responseCode = "204", description = "No content", content = @Content),
+			@ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+			@ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Patient not found", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+		}
+	)
 	ResponseEntity<Void> delete(@PathVariable("id") Long id);
 }

@@ -7,13 +7,16 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 public interface AppointmentControllerDocs {
 	
-	@Operation(summary = "Adds a new Appointment",
-		description = "Adds a new Appointment by passing in a JSON,representation of the Appointment.",
+	@Operation(
+		summary = "Create a new appointment",
+		description = "Registers a new appointment by receiving a JSON representation of the appointment.",
 		tags = {"Appointment"},
 		responses = {
 			@ApiResponse(
@@ -24,108 +27,97 @@ public interface AppointmentControllerDocs {
 			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-	})
-	ResponseEntity<AppointmentResponseDTO> createAppointment(AppointmentRequestDTO dto);
+		}
+	)
+	ResponseEntity<AppointmentResponseDTO> createAppointment(@RequestBody AppointmentRequestDTO dto);
 	
-	@Operation(summary = "Updated a Appointment`s information",
-		description = "Updated a specific Appointment by your ID",
+	@Operation(
+		summary = "Update an appointment",
+		description = "Updates the details of an existing appointment by its ID.",
 		tags = {"Appointment"},
 		responses = {
-			@ApiResponse(
-				description = "Success",
-				responseCode = "200",
-				content = @Content(schema = @Schema(implementation = AppointmentResponseDTO.class))
-			),
+			@ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = AppointmentResponseDTO.class))),
 			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
 			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
 			@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-		})
-	ResponseEntity<AppointmentResponseDTO> updateAppointment(AppointmentRequestDTO dto);
+		}
+	)
+	ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable Long id, @RequestBody AppointmentRequestDTO dto);
 	
-	@Operation(summary = "Cancel a Appointment`s ",
-		description = "Cancel a specific Appointment by your ID",
+	@Operation(
+		summary = "Cancel an appointment",
+		description = "Cancels an existing appointment by its ID.",
 		tags = {"Appointment"},
 		responses = {
-			@ApiResponse(
-				description = "Success",
-				responseCode = "200",
-				content = @Content(schema = @Schema(implementation = AppointmentResponseDTO.class))
-			),
+			@ApiResponse(description = "Success", responseCode = "200", content = @Content),
 			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
 			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
 			@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-		})
-	ResponseEntity<Void> cancelAppointment(Long id);
+		}
+	)
+	ResponseEntity<Void> cancelAppointment(@PathVariable Long id);
 	
-	@Operation(summary = "Find a Appointment`s",
-		description = "Find a specific Appointment by your ID",
+	@Operation(
+		summary = "Retrieve an appointment by ID",
+		description = "Fetches an appointment by its unique identifier.",
 		tags = {"Appointment"},
 		responses = {
-			@ApiResponse(
-				description = "Success",
-				responseCode = "200",
-				content = @Content(schema = @Schema(implementation = AppointmentResponseDTO.class))
-			),
+			@ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = AppointmentResponseDTO.class))),
 			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
 			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
 			@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-		})
-	ResponseEntity<AppointmentResponseDTO> findByIdAppointment(Long id);
+		}
+	)
+	ResponseEntity<AppointmentResponseDTO> findByIdAppointment(@PathVariable Long id);
 	
-	@Operation(summary = "Find all Appointment",
-		description = "Find all Appointment",
+	@Operation(
+		summary = "Retrieve all appointments",
+		description = "Fetches all registered appointments.",
 		tags = {"Appointment"},
 		responses = {
-			@ApiResponse(
-				description = "Success",
-				responseCode = "200",
-				content = @Content(schema = @Schema(implementation = AppointmentResponseDTO.class))
-			),
+			@ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = AppointmentResponseDTO.class))),
 			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
 			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
 			@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-		})
+		}
+	)
 	ResponseEntity<List<AppointmentResponseDTO>> findAllAppointment();
 	
-	@Operation(summary = "Find Doctor's Appointment",
-		description = "Find Doctor's Appointment",
+	@Operation(
+		summary = "Retrieve appointments by doctor ID",
+		description = "Fetches all appointments for a specific doctor.",
 		tags = {"Appointment"},
 		responses = {
-			@ApiResponse(
-				description = "Success",
-				responseCode = "200",
-				content = @Content(schema = @Schema(implementation = AppointmentResponseDTO.class))
-			),
+			@ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = AppointmentResponseDTO.class))),
 			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
 			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
 			@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-		})
-	ResponseEntity<List<AppointmentResponseDTO>> findByDoctor(Long doctorId);
+		}
+	)
+	ResponseEntity<List<AppointmentResponseDTO>> findByDoctor(@PathVariable Long doctorId);
 	
-	@Operation(summary = "Find Patient's Appointment",
-		description = "Find Patient's Appointment",
+	@Operation(
+		summary = "Retrieve appointments by patient ID",
+		description = "Fetches all appointments for a specific patient.",
 		tags = {"Appointment"},
 		responses = {
-			@ApiResponse(
-				description = "Success",
-				responseCode = "200",
-				content = @Content(schema = @Schema(implementation = AppointmentResponseDTO.class))
-			),
+			@ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = AppointmentResponseDTO.class))),
 			@ApiResponse(description = "No Content", responseCode = "204", content = @Content),
 			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
 			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
 			@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-		})
-	ResponseEntity<List<AppointmentResponseDTO>> findByPatient(Long patientId);
+		}
+	)
+	ResponseEntity<List<AppointmentResponseDTO>> findByPatient(@PathVariable Long patientId);
 }

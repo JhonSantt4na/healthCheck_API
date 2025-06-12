@@ -3,9 +3,11 @@ package com.santt4na.health_check.service;
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentRequestDTO;
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentResponseDTO;
 import com.santt4na.health_check.service.impl.AppointmentService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public AppointmentResponseDTO createAppointment(AppointmentRequestDTO dto) {
@@ -13,7 +15,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 	
 	@Override
-	public AppointmentResponseDTO updateAppointment(AppointmentRequestDTO dto) {
+	public AppointmentResponseDTO updateAppointment(Long id, AppointmentRequestDTO dto) {
 		return null;
 	}
 	

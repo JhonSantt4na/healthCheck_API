@@ -5,9 +5,11 @@ import com.santt4na.health_check.dto.patientDTO.PatientResponseDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientUpdateDTO;
 import com.santt4na.health_check.entity.Appointment;
 import com.santt4na.health_check.service.impl.PatientService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PatientServiceImpl implements PatientService {
 	@Override
 	public PatientResponseDTO createPatient(PatientCreateDTO dto) {
