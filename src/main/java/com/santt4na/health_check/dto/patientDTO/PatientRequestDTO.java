@@ -2,13 +2,10 @@ package com.santt4na.health_check.dto.patientDTO;
 
 import com.santt4na.health_check.enums.Gender;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
-public record PatientUpdateDTO(
+public record PatientRequestDTO(
 	
 	@Size(min = 2, max = 100) @NotNull String fullName,
 	@NotNull Gender gender,
@@ -16,7 +13,6 @@ public record PatientUpdateDTO(
 	@Past LocalDate dateOfBirth,
 	@Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}") @NotNull String cpf,
 	@Size(max = 50) String healthInsurance
-
+	
 ) {
 }
-

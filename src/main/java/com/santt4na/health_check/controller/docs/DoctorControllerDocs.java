@@ -1,6 +1,6 @@
 package com.santt4na.health_check.controller.docs;
 
-import com.santt4na.health_check.dto.doctorDTO.DoctorCreateDTO;
+import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorResponseDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorUpdateDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -73,7 +73,7 @@ public interface DoctorControllerDocs {
 			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
 		}
 	)
-	ResponseEntity<DoctorResponseDTO> create(@RequestBody DoctorCreateDTO doctor);
+	ResponseEntity<DoctorResponseDTO> create(@RequestBody DoctorRequestDTO doctor);
 	
 	@Operation(
 		summary = "Update doctor",

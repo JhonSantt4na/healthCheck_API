@@ -1,6 +1,6 @@
 package com.santt4na.health_check.service;
 
-import com.santt4na.health_check.dto.patientDTO.PatientCreateDTO;
+import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientResponseDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientUpdateDTO;
 import com.santt4na.health_check.entity.Appointment;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class PatientServiceImpl implements PatientService {
 	@Override
-	public PatientResponseDTO createPatient(PatientCreateDTO dto) {
+	public PatientResponseDTO createPatient(PatientRequestDTO dto) {
 		return null;
 	}
 	

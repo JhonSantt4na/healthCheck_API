@@ -61,14 +61,14 @@ public class AppointmentController implements AppointmentControllerDocs {
 		return ResponseEntity.ok(service.findAllAppointment());
 	}
 	
-	@GetMapping(value = "findDoctor/{doctorId}",
+	@GetMapping(value = "findDoctor/{doctor}",
 		produces = MediaType.APPLICATION_JSON_VALUE)
 	@Override
 	public ResponseEntity<List<AppointmentResponseDTO>> findByDoctor(@PathVariable Long doctorId) {
 		return ResponseEntity.ok(service.findByDoctor(doctorId));
 	}
 	
-	@GetMapping(value = "findPatient/{patientId}",
+	@GetMapping(value = "findPatient/{patient}",
 		produces = MediaType.APPLICATION_JSON_VALUE)
 	@Override
 	public ResponseEntity<List<AppointmentResponseDTO>> findByPatient(@PathVariable Long patientId) {

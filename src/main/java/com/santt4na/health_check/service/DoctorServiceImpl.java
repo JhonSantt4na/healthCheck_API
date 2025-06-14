@@ -1,6 +1,6 @@
 package com.santt4na.health_check.service;
 
-import com.santt4na.health_check.dto.doctorDTO.DoctorCreateDTO;
+import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorResponseDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorUpdateDTO;
 import com.santt4na.health_check.entity.Appointment;
@@ -23,7 +23,7 @@ public class DoctorServiceImpl implements DoctorService {
 	
 	// paused 0/4
 	@Override
-	public DoctorResponseDTO createDoctor(DoctorCreateDTO dto) {
+	public DoctorResponseDTO createDoctor(DoctorRequestDTO dto) {
 		//Doctor newDoctor = mapper.createToEntity(dto);
 		//newDoctor.setRole(Roles.DOCTOR);
 		

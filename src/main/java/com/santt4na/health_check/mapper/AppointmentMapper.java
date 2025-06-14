@@ -8,38 +8,22 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AppointmentMapper {
 	
-	@Mapping(target = "updatedAt", ignore = true)
-	@Mapping(target = "status", ignore = true)
-	@Mapping(target = "patient", ignore = true)
 	@Mapping(target = "id", ignore = true)
-	@Mapping(target = "doctor", ignore = true)
 	@Mapping(target = "createdAt", ignore = true)
-	Appointment requestToEntity(AppointmentRequestDTO appointmentRequestDTO);
-	
 	@Mapping(target = "updatedAt", ignore = true)
-	@Mapping(target = "reason", ignore = true)
-	@Mapping(target = "patient", ignore = true)
-	@Mapping(target = "id", ignore = true)
-	@Mapping(target = "duration", ignore = true)
-	@Mapping(target = "doctor", ignore = true)
-	@Mapping(target = "createdAt", ignore = true)
-	@Mapping(target = "appointmentDate", ignore = true)
-	Appointment approvalToEntity(AppointmentApprovalDTO appointmentApprovalDTO);
+	@Mapping(source = "patient", target = "patient")
+	@Mapping(source = "doctor", target = "doctor")
+	Appointment requestToEntity(AppointmentRequestDTO dto);
 	
+	@Mapping(target = "id", ignore = true)
+	@Mapping(target = "createdAt", ignore = true)
 	@Mapping(target = "updatedAt", ignore = true)
-	@Mapping(target = "status", ignore = true)
-	@Mapping(target = "reason", ignore = true)
-	@Mapping(target = "patient", ignore = true)
-	@Mapping(target = "id", ignore = true)
-	@Mapping(target = "duration", ignore = true)
-	@Mapping(target = "doctor", ignore = true)
-	@Mapping(target = "createdAt", ignore = true)
-	@Mapping(target = "appointmentDate", ignore = true)
-	Appointment cancelToEntity(AppointmentCancelDTO appointmentCancelDTO);
+	@Mapping(source = "patient", target = "patient")
+	@Mapping(source = "doctor", target = "doctor")
+	Appointment updateToEntity(AppointmentUpdateDTO dto);
 	
-	AppointmentRequestDTO requestToDto(Appointment appointment);
-	AppointmentApprovalDTO approvalToDto(Appointment appointment);
-	AppointmentCancelDTO cancelToDto(Appointment appointment);
-	AppointmentReportDTO reportToDto(Appointment appointment);
 	AppointmentResponseDTO responseToDto(Appointment appointment);
+	AppointmentRequestDTO requestToDto(Appointment appointment);
+	AppointmentUpdateDTO updatedToDto(Appointment appointment);
 }
+

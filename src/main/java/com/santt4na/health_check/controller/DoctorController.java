@@ -1,7 +1,7 @@
 package com.santt4na.health_check.controller;
 
 import com.santt4na.health_check.controller.docs.DoctorControllerDocs;
-import com.santt4na.health_check.dto.doctorDTO.DoctorCreateDTO;
+import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorResponseDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorUpdateDTO;
 import com.santt4na.health_check.service.DoctorServiceImpl;
@@ -42,7 +42,7 @@ public class DoctorController implements DoctorControllerDocs{
 		consumes = {MediaType.APPLICATION_JSON_VALUE}
 	)
 	@Override
-	public ResponseEntity<DoctorResponseDTO> create(@RequestBody DoctorCreateDTO doctor) {
+	public ResponseEntity<DoctorResponseDTO> create(@RequestBody DoctorRequestDTO doctor) {
 		DoctorResponseDTO created = service.createDoctor(doctor);
 		return ResponseEntity
 			.created(URI.create("/api/doctor/" + created.id()))

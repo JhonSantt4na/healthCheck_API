@@ -1,6 +1,6 @@
 package com.santt4na.health_check.controller.docs;
 
-import com.santt4na.health_check.dto.patientDTO.PatientCreateDTO;
+import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientResponseDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientUpdateDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,25 +40,6 @@ public interface PatientControllerDocs {
 	ResponseEntity<List<PatientResponseDTO>> findAll();
 	
 	@Operation(
-		summary = "Retrieve a patient by ID",
-		description = "Returns the details of a patient by their ID.",
-		tags = {"Patient"},
-		responses = {
-			@ApiResponse(
-				responseCode = "200",
-				description = "Patient retrieved successfully",
-				content = @Content(schema = @Schema(implementation = PatientResponseDTO.class))
-			),
-			@ApiResponse(responseCode = "204", description = "No content", content = @Content),
-			@ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-			@ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-			@ApiResponse(responseCode = "404", description = "Patient not found", content = @Content),
-			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
-		}
-	)
-	ResponseEntity<PatientResponseDTO> findById(@PathVariable("id") Long id);
-	
-	@Operation(
 		summary = "Create a new patient",
 		description = "Registers a new patient using the provided data.",
 		tags = {"Patient"},
@@ -73,7 +54,7 @@ public interface PatientControllerDocs {
 			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
 		}
 	)
-	ResponseEntity<PatientResponseDTO> create(@RequestBody PatientCreateDTO patient);
+	ResponseEntity<PatientResponseDTO> create(@RequestBody PatientRequestDTO patient);
 	
 	@Operation(
 		summary = "Update a patient's information",
@@ -93,6 +74,25 @@ public interface PatientControllerDocs {
 		}
 	)
 	ResponseEntity<PatientResponseDTO> update(@PathVariable("id") Long id, @RequestBody PatientUpdateDTO patient);
+	
+	@Operation(
+		summary = "Retrieve a patient by ID",
+		description = "Returns the details of a patient by their ID.",
+		tags = {"Patient"},
+		responses = {
+			@ApiResponse(
+				responseCode = "200",
+				description = "Patient retrieved successfully",
+				content = @Content(schema = @Schema(implementation = PatientResponseDTO.class))
+			),
+			@ApiResponse(responseCode = "204", description = "No content", content = @Content),
+			@ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+			@ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Patient not found", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+		}
+	)
+	ResponseEntity<PatientResponseDTO> findById(@PathVariable("id") Long id);
 	
 	@Operation(
 		summary = "Delete a patient",

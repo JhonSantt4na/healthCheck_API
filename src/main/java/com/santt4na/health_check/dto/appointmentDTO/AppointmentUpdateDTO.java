@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-public record AppointmentRequestDTO(
+public record AppointmentUpdateDTO(
 	
 	@NotNull LocalDateTime appointmentDate,
 	Integer duration,
@@ -14,6 +14,6 @@ public record AppointmentRequestDTO(
 	@NotNull Long patient,
 	@NotNull Long doctor,
 	@NotNull AppointmentStatus status
-
+	
 ) {
 }

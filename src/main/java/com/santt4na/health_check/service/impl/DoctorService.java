@@ -1,6 +1,6 @@
 package com.santt4na.health_check.service.impl;
 
-import com.santt4na.health_check.dto.doctorDTO.DoctorCreateDTO;
+import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorResponseDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorUpdateDTO;
 import com.santt4na.health_check.entity.Appointment;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DoctorService {
 	
-	DoctorResponseDTO createDoctor(DoctorCreateDTO dto);
+	DoctorResponseDTO createDoctor(DoctorRequestDTO dto);
 	
 	DoctorResponseDTO updateDoctor(Long id, DoctorUpdateDTO dto);
 	

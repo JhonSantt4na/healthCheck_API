@@ -1,44 +1,31 @@
 package com.santt4na.health_check.mapper;
 
-import com.santt4na.health_check.dto.patientDTO.PatientCreateDTO;
+import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientResponseDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientUpdateDTO;
 import com.santt4na.health_check.entity.Patient;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+	componentModel = "spring",
+	nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+)
 public interface PatientMapper {
 	
 	@Mapping(target = "updatedAt", ignore = true)
-	@Mapping(target = "status", ignore = true)
-	@Mapping(target = "role", ignore = true)
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "createdAt", ignore = true)
 	@Mapping(target = "appointments", ignore = true)
-	@Mapping(target = "accountActive", ignore = true)
-	Patient createToEntity(PatientCreateDTO patientCreateDTO);
+	Patient toEntity(PatientRequestDTO dto);
 	
 	@Mapping(target = "updatedAt", ignore = true)
-	@Mapping(target = "role", ignore = true)
-	@Mapping(target = "password", ignore = true)
 	@Mapping(target = "id", ignore = true)
-	@Mapping(target = "email", ignore = true)
-	@Mapping(target = "dateOfBirth", ignore = true)
-	@Mapping(target = "createdAt", ignore = true)
-	@Mapping(target = "cpf", ignore = true)
-	@Mapping(target = "appointments", ignore = true)
-	Patient updeteToEntity(PatientUpdateDTO patientUpdateDTO);
-	
-	@Mapping(target = "updatedAt", ignore = true)
-	@Mapping(target = "role", ignore = true)
-	@Mapping(target = "password", ignore = true)
 	@Mapping(target = "createdAt", ignore = true)
 	@Mapping(target = "appointments", ignore = true)
-	@Mapping(target = "accountActive", ignore = true)
-	Patient responseToEntity(PatientResponseDTO patientResponseDTO);
+	void updateEntityFromDto(PatientUpdateDTO dto, @MappingTarget Patient entity);
 	
-	PatientCreateDTO createToDto (Patient patient);
-	PatientUpdateDTO updateToDto (Patient patient);
-	PatientResponseDTO responseToDto (Patient patient);
+	PatientResponseDTO toResponseDto(Patient entity);
 }

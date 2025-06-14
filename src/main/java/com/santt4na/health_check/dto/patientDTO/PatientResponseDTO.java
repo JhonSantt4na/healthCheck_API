@@ -1,19 +1,21 @@
 package com.santt4na.health_check.dto.patientDTO;
 
 import com.santt4na.health_check.enums.Gender;
-import com.santt4na.health_check.enums.UserState;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record PatientResponseDTO(
+	
 	Long id,
-	String name,
-	String email,
+	String fullName,
+	Gender gender,
+	String phone,
 	LocalDate dateOfBirth,
 	String cpf,
-	String phone,
 	String healthInsurance,
-	Gender gender,
-	UserState status
+	LocalDateTime createdAt,
+	LocalDateTime updatedAt
+	
 ) {
 }
