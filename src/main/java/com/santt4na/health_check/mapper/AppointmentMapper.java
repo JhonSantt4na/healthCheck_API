@@ -1,6 +1,8 @@
 package com.santt4na.health_check.mapper;
 
-import com.santt4na.health_check.dto.appointmentDTO.*;
+import com.santt4na.health_check.dto.appointmentDTO.AppointmentRequestDTO;
+import com.santt4na.health_check.dto.appointmentDTO.AppointmentResponseDTO;
+import com.santt4na.health_check.dto.appointmentDTO.AppointmentUpdateDTO;
 import com.santt4na.health_check.entity.Appointment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -25,5 +27,5 @@ public interface AppointmentMapper {
 	AppointmentResponseDTO responseToDto(Appointment appointment);
 	AppointmentRequestDTO requestToDto(Appointment appointment);
 	AppointmentUpdateDTO updatedToDto(Appointment appointment);
+	
 }
-
