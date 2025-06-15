@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable, UserDetails {
+public class User implements UserDetails, Serializable {
 	
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -22,10 +22,10 @@ public class User implements Serializable, UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "userName", unique = true)
+	@Column(name = "user_name", unique = true)
 	private String userName;
 	
-	@Column(name = "fullName")
+	@Column(name = "full_name")
 	private String fullName;
 	
 	@Column
@@ -40,7 +40,7 @@ public class User implements Serializable, UserDetails {
 	@Column(name = "credentials_non_expired")
 	private Boolean credentialsNonExpired;
 	
-	@Column()
+	@Column
 	private Boolean enabled;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -49,6 +49,8 @@ public class User implements Serializable, UserDetails {
 		inverseJoinColumns = {@JoinColumn (name = "id_permission")}
 	)
 	private List<Permission> permissions;
+	
+	public User() {}
 	
 	public List<String> getRoles(){
 		List<String> roles = new ArrayList<>();
@@ -93,19 +95,12 @@ public class User implements Serializable, UserDetails {
 		return this.enabled;
 	}
 	
-	public User() {
-	}
-	
 	public Long getId() {
 		return id;
 	}
 	
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	public String getUserName() {
-		return userName;
 	}
 	
 	public void setUserName(String userName) {
@@ -168,11 +163,11 @@ public class User implements Serializable, UserDetails {
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		User user = (User) o;
-		return Objects.equals(id, user.id) && Objects.equals(userName, user.userName) && Objects.equals(fullName, user.fullName) && Objects.equals(password, user.password) && Objects.equals(accountNonExpired, user.accountNonExpired) && Objects.equals(accountNonLocked, user.accountNonLocked) && Objects.equals(credentialsNonExpired, user.credentialsNonExpired) && Objects.equals(enabled, user.enabled) && Objects.equals(permissions, user.permissions);
+		return Objects.equals(getId(), user.getId()) && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getFullName(), user.getFullName()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(isAccountNonExpired(), user.isAccountNonExpired()) && Objects.equals(isAccountNonLocked(), user.isAccountNonLocked()) && Objects.equals(isCredentialsNonExpired(), user.isCredentialsNonExpired()) && Objects.equals(isEnabled(), user.isEnabled()) && Objects.equals(getPermissions(), user.getPermissions());
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, userName, fullName, password, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, permissions);
+		return Objects.hash(getId(), getUsername(), getFullName(), getPassword(), isAccountNonExpired(), isAccountNonLocked(), isCredentialsNonExpired(), isEnabled(), getPermissions());
 	}
 }

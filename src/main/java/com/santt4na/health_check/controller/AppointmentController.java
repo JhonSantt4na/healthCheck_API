@@ -19,7 +19,6 @@ public class AppointmentController implements AppointmentControllerDocs {
 	@Autowired
 	private AppointmentServiceImpl service;
 	
-	
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Override
 	public ResponseEntity<AppointmentResponseDTO> createAppointment(@RequestBody AppointmentRequestDTO dto) {

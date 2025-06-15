@@ -27,5 +27,4 @@ public interface AppointmentMapper {
 	AppointmentResponseDTO responseToDto(Appointment appointment);
 	AppointmentRequestDTO requestToDto(Appointment appointment);
 	AppointmentUpdateDTO updatedToDto(Appointment appointment);
-	
 }
