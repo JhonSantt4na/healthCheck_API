@@ -34,24 +34,27 @@ public class securityConfig {
 	@Bean
 	PasswordEncoder passwordEncoder(){
 		
-		PasswordEncoder pbkdf2Encoder = new Pbkdf2PasswordEncoder("", 8, 185000, Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
+		PasswordEncoder pbkdf2Encoder = new Pbkdf2PasswordEncoder(
+			"", 8, 185000,
+			Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
 		
 		Map<String, PasswordEncoder> encoders = new HashMap<>();
 		encoders.put("pbkdf2", pbkdf2Encoder);
 		DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);
-		passwordEncoder.setDefaultPasswordEncoderForMatches(pbkdf2Encoder);
 		
+		passwordEncoder.setDefaultPasswordEncoderForMatches(pbkdf2Encoder);
 		return passwordEncoder;
 	}
 	
 	@Bean
-	AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
+	AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
 		return configuration.getAuthenticationManager();
 	}
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		JwtTokenFilter filter = new JwtTokenFilter(tokenProvider);
+		
 		return http
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
@@ -64,8 +67,8 @@ public class securityConfig {
 					.requestMatchers(
 						"/auth/signin",
 						"/auth/refresh/**",
-						"/swagger-ui/**",
 						"/auth/createUser",
+						"/swagger-ui/**",
 						"/v3/api-docs/**"
 					).permitAll()
 					.requestMatchers("/api/**").authenticated()

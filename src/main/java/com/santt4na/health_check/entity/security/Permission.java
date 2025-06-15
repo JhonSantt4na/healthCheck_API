@@ -1,9 +1,6 @@
 package com.santt4na.health_check.entity.security;
 
-
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serial;
@@ -12,8 +9,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "permission")
-public class Permission implements Serializable, GrantedAuthority {
-
+public class Permission implements GrantedAuthority, Serializable {
+	
 	@Serial
 	private static final long serialVersionUID = 1L;
 	
@@ -49,11 +46,11 @@ public class Permission implements Serializable, GrantedAuthority {
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		Permission that = (Permission) o;
-		return Objects.equals(id, that.id) && Objects.equals(description, that.description);
+		return Objects.equals(getId(), that.getId()) && Objects.equals(getDescription(), that.getDescription());
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, description);
+		return Objects.hash(getId(), getDescription());
 	}
 }

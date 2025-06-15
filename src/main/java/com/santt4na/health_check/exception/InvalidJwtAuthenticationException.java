@@ -10,5 +10,4 @@ public class InvalidJwtAuthenticationException extends AuthenticationException {
 	public InvalidJwtAuthenticationException(String message) {
 		super(message);
 	}
-	
 }
