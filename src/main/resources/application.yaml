@@ -25,5 +25,11 @@ logging:
 server:
   port: 8080
 
+security:
+  jwt:
+    token:
+      secret-key: 53cr57
+      expire-lenght: 3600000
+
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000
