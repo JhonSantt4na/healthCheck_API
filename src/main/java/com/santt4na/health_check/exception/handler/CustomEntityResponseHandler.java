@@ -1,6 +1,7 @@
 package com.santt4na.health_check.exception.handler;
 
 import com.santt4na.health_check.exception.DuplicateEmailException;
+import com.santt4na.health_check.exception.InvalidJwtAuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -27,7 +28,7 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
 	}
 	
 	@ExceptionHandler(DuplicateEmailException.class)
-	public final ResponseEntity<ExceptionResponse> handleDuplicateEmail(DuplicateEmailException ex, WebRequest request) {
+	public final ResponseEntity<ExceptionResponse> handleDuplicateEmailExceptions(Exception ex, WebRequest request) {
 		//logger.warn("Duplicate email error: {}", ex.getMessage());
 		ExceptionResponse response = new ExceptionResponse(
 			new Date(),
@@ -35,5 +36,16 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
 			request.getDescription(false)
 		);
 		return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(InvalidJwtAuthenticationException.class)
+	public final ResponseEntity<ExceptionResponse> handleInvalidJwtAuthenticationExceptions(Exception ex, WebRequest request) {
+		//logger.warn("Duplicate email error: {}", ex.getMessage());
+		ExceptionResponse response = new ExceptionResponse(
+			new Date(),
+			ex.getMessage(),
+			request.getDescription(false)
+		);
+		return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 	}
 }
