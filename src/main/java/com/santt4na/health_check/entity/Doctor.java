@@ -1,5 +1,6 @@
 package com.santt4na.health_check.entity;
 
+import com.santt4na.health_check.entity.security.User;
 import com.santt4na.health_check.enums.Gender;
 import com.santt4na.health_check.enums.Specialty;
 import jakarta.persistence.*;
@@ -55,6 +56,10 @@ public class Doctor implements Serializable {
 	@ToString.Exclude
 	private List<Appointment> appointments = new ArrayList<>();
 	
+	@OneToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
+	private User user;
+	
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 	
@@ -72,52 +77,12 @@ public class Doctor implements Serializable {
 		this.id = id;
 	}
 	
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
+	public String getFullName() {
+		return fullName;
 	}
 	
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-	
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-	
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-	
-	public List<Appointment> getAppointments() {
-		return appointments;
-	}
-	
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
-	}
-	
-	public String getMedicalLicense() {
-		return medicalLicense;
-	}
-	
-	public void setMedicalLicense(String medicalLicense) {
-		this.medicalLicense = medicalLicense;
-	}
-	
-	public Specialty getSpecialty() {
-		return specialty;
-	}
-	
-	public void setSpecialty(Specialty specialty) {
-		this.specialty = specialty;
-	}
-	
-	public String getPhone() {
-		return phone;
-	}
-	
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 	
 	public Gender getGender() {
@@ -128,27 +93,71 @@ public class Doctor implements Serializable {
 		this.gender = gender;
 	}
 	
-	public String getFullName() {
-		return fullName;
+	public String getPhone() {
+		return phone;
 	}
 	
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	public Specialty getSpecialty() {
+		return specialty;
+	}
+	
+	public void setSpecialty(Specialty specialty) {
+		this.specialty = specialty;
+	}
+	
+	public String getMedicalLicense() {
+		return medicalLicense;
+	}
+	
+	public void setMedicalLicense(String medicalLicense) {
+		this.medicalLicense = medicalLicense;
+	}
+	
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+	
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+	
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+	
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+	
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 	
 	@Override
-	public final boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null) return false;
-		Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-		Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-		if (thisEffectiveClass != oEffectiveClass) return false;
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
 		Doctor doctor = (Doctor) o;
-		return getId() != null && Objects.equals(getId(), doctor.getId());
+		return Objects.equals(id, doctor.id) && Objects.equals(fullName, doctor.fullName) && gender == doctor.gender && Objects.equals(phone, doctor.phone) && specialty == doctor.specialty && Objects.equals(medicalLicense, doctor.medicalLicense) && Objects.equals(appointments, doctor.appointments) && Objects.equals(user, doctor.user) && Objects.equals(createdAt, doctor.createdAt) && Objects.equals(updatedAt, doctor.updatedAt);
 	}
 	
 	@Override
-	public final int hashCode() {
-		return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+	public int hashCode() {
+		return Objects.hash(id, fullName, gender, phone, specialty, medicalLicense, appointments, user, createdAt, updatedAt);
 	}
 }

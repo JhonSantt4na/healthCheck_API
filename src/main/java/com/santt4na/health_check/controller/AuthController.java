@@ -1,6 +1,8 @@
 package com.santt4na.health_check.controller;
 
 import com.santt4na.health_check.controller.docs.AuthControllerDocs;
+import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
+import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
 import com.santt4na.health_check.service.security.AuthService;
 import org.apache.commons.lang3.StringUtils;
@@ -38,12 +40,20 @@ public class AuthController implements AuthControllerDocs {
 		return  ResponseEntity.ok().body(token);
 	}
 	
-	@PostMapping(value = "/createUser",
+	@PostMapping(value = "/registerDoctor",
 		consumes = MediaType.APPLICATION_JSON_VALUE,
 		produces = MediaType.APPLICATION_JSON_VALUE)
 	@Override
-	public AccountCredentialsDTO create(@RequestBody AccountCredentialsDTO credentials) {
-		return service.create(credentials);
+	public AccountCredentialsDTO registerDoctor(@RequestBody AccountCredentialsDTO credentials, @RequestBody DoctorRequestDTO doctor) {
+		return service.registerDoctor(credentials, doctor);
+	}
+	
+	@PostMapping(value = "/registerPatient",
+		consumes = MediaType.APPLICATION_JSON_VALUE,
+		produces = MediaType.APPLICATION_JSON_VALUE)
+	@Override
+	public AccountCredentialsDTO registerPatient(AccountCredentialsDTO credentials, PatientRequestDTO patient) {
+		return service.registerPatient(credentials, patient);
 	}
 	
 	private boolean parametersAreInvalid(String username, String refreshToken) {

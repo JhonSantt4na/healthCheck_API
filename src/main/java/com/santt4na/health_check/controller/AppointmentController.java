@@ -3,7 +3,7 @@ package com.santt4na.health_check.controller;
 import com.santt4na.health_check.controller.docs.AppointmentControllerDocs;
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentRequestDTO;
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentResponseDTO;
-import com.santt4na.health_check.service.AppointmentServiceImpl;
+import com.santt4na.health_check.service.impl.AppointmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/appointment/v1")
+@RequestMapping("/api/appointment")
 public class AppointmentController implements AppointmentControllerDocs {
 	
 	@Autowired

@@ -1,4 +1,4 @@
-package com.santt4na.health_check.service;
+package com.santt4na.health_check.service.impl;
 
 import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorResponseDTO;
@@ -6,7 +6,7 @@ import com.santt4na.health_check.dto.doctorDTO.DoctorUpdateDTO;
 import com.santt4na.health_check.entity.Appointment;
 import com.santt4na.health_check.mapper.DoctorMapper;
 import com.santt4na.health_check.repository.DoctorRepository;
-import com.santt4na.health_check.service.impl.DoctorService;
+import com.santt4na.health_check.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +24,8 @@ public class DoctorServiceImpl implements DoctorService {
 	// paused 0/4
 	@Override
 	public DoctorResponseDTO createDoctor(DoctorRequestDTO dto) {
-		//Doctor newDoctor = mapper.createToEntity(dto);
-		//newDoctor.setRole(Roles.DOCTOR);
+		//Doctor newDoctor = mapper.toEntity(dto);
+		//newDoctor
 		
 		// 1/4 Validar Email duplicado
 		// 2/4 Lanca uma Exception personalizada

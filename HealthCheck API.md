@@ -171,6 +171,22 @@ A **HealthCheck API** é uma API REST construída com Java e Spring Boot, focada
     
 - ativo (boolean)
 
+- Plano de saude
+
+Operadoras Brasileiras Comuns:
+    UN (Unimed)
+    AM (Amil)
+    BR (Bradesco Saúde)
+    SU (SulAmérica)
+
+sus:
+4. Exemplos de Números VÁLIDOS para Teste
+   Tipo	Número do CNS
+   Definitivo	703 6888 6073 0008
+   Definitivo	131 6544 3387 0002
+   Provisório	899 0000 1234 5678
+
+   Observação: Remova os espaços antes de validar!
 
 ### 📅 Consulta (`Appointment`)
 

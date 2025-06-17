@@ -40,23 +40,6 @@ public interface PatientControllerDocs {
 	ResponseEntity<List<PatientResponseDTO>> findAll();
 	
 	@Operation(
-		summary = "Create a new patient",
-		description = "Registers a new patient using the provided data.",
-		tags = {"Patient"},
-		responses = {
-			@ApiResponse(
-				responseCode = "201",
-				description = "Patient created successfully",
-				content = @Content(schema = @Schema(implementation = PatientResponseDTO.class))
-			),
-			@ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content),
-			@ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
-		}
-	)
-	ResponseEntity<PatientResponseDTO> create(@RequestBody PatientRequestDTO patient);
-	
-	@Operation(
 		summary = "Update a patient's information",
 		description = "Updates an existing patient's details by their ID.",
 		tags = {"Patient"},

@@ -1,4 +1,4 @@
-package com.santt4na.health_check.service.impl;
+package com.santt4na.health_check.service;
 
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentRequestDTO;
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentResponseDTO;

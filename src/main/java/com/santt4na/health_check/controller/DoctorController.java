@@ -4,7 +4,7 @@ import com.santt4na.health_check.controller.docs.DoctorControllerDocs;
 import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorResponseDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorUpdateDTO;
-import com.santt4na.health_check.service.DoctorServiceImpl;
+import com.santt4na.health_check.service.impl.DoctorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/doctor/v1")
+@RequestMapping("/api/doctor")
 public class DoctorController implements DoctorControllerDocs{
 	
 	@Autowired
@@ -35,18 +35,6 @@ public class DoctorController implements DoctorControllerDocs{
 	public ResponseEntity<DoctorResponseDTO> findById(@PathVariable Long id) {
 		DoctorResponseDTO found = service.getDoctorById(id);
 		return ResponseEntity.ok(found);
-	}
-	
-	@PostMapping(
-		produces = {MediaType.APPLICATION_JSON_VALUE},
-		consumes = {MediaType.APPLICATION_JSON_VALUE}
-	)
-	@Override
-	public ResponseEntity<DoctorResponseDTO> create(@RequestBody DoctorRequestDTO doctor) {
-		DoctorResponseDTO created = service.createDoctor(doctor);
-		return ResponseEntity
-			.created(URI.create("/api/doctor/" + created.id()))
-			.body(created);
 	}
 	
 	@PutMapping(

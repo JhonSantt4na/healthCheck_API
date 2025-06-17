@@ -59,23 +59,6 @@ public interface DoctorControllerDocs {
 	ResponseEntity<DoctorResponseDTO> findById(@PathVariable("id") Long id);
 	
 	@Operation(
-		summary = "Register a new doctor",
-		description = "Adds a new doctor using a JSON representation of the Doctor object.",
-		tags = {"Doctor"},
-		responses = {
-			@ApiResponse(
-				responseCode = "200",
-				description = "Success",
-				content = @Content(schema = @Schema(implementation = DoctorResponseDTO.class))
-			),
-			@ApiResponse(responseCode = "400", description = "Invalid request", content = @Content),
-			@ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
-		}
-	)
-	ResponseEntity<DoctorResponseDTO> create(@RequestBody DoctorRequestDTO doctor);
-	
-	@Operation(
 		summary = "Update doctor",
 		description = "Updates the data of an existing doctor based on the ID.",
 		tags = {"Doctor"},

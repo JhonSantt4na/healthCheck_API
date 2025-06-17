@@ -1,8 +1,8 @@
-package com.santt4na.health_check.service;
+package com.santt4na.health_check.service.impl;
 
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentRequestDTO;
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentResponseDTO;
-import com.santt4na.health_check.service.impl.AppointmentService;
+import com.santt4na.health_check.service.AppointmentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

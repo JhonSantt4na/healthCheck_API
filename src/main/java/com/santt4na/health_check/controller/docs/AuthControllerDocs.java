@@ -1,5 +1,7 @@
 package com.santt4na.health_check.controller.docs;
 
+import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
+import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -37,8 +39,8 @@ public interface AuthControllerDocs {
 		String refreshToken);
 	
 	@Operation(
-		summary = "Create a new User",
-		description = "Registers a new user in the system with the provided credentials.",
+		summary = "Create a new Doctor",
+		description = "Registers a new Doctor in the system with the provided credentials.",
 		tags = {"User Management"},
 		responses = {
 			@ApiResponse(description = "Created", responseCode = "201", content = @Content),
@@ -47,5 +49,18 @@ public interface AuthControllerDocs {
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
 		}
 	)
-	AccountCredentialsDTO create(AccountCredentialsDTO credentials);
+	AccountCredentialsDTO registerDoctor(AccountCredentialsDTO credentials, DoctorRequestDTO doctor);
+	
+	@Operation(
+		summary = "Create a new Patient",
+		description = "Registers a new Patient in the system with the provided credentials.",
+		tags = {"User Management"},
+		responses = {
+			@ApiResponse(description = "Created", responseCode = "201", content = @Content),
+			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+			@ApiResponse(description = "Conflict", responseCode = "409", content = @Content),
+			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+		}
+	)
+	AccountCredentialsDTO registerPatient(AccountCredentialsDTO credentials, PatientRequestDTO patient);
 }

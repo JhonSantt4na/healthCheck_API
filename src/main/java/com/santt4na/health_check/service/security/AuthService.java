@@ -1,11 +1,21 @@
 package com.santt4na.health_check.service.security;
 
+import com.santt4na.health_check.Startup;
+import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
+import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
 import com.santt4na.health_check.dto.securityDTO.TokenDTO;
+import com.santt4na.health_check.entity.Doctor;
+import com.santt4na.health_check.entity.security.Permission;
 import com.santt4na.health_check.entity.security.User;
 import com.santt4na.health_check.exception.RequiredObjectIsNullException;
+import com.santt4na.health_check.mapper.DoctorMapper;
+import com.santt4na.health_check.mapper.UserMapper;
+import com.santt4na.health_check.repository.DoctorRepository;
+import com.santt4na.health_check.repository.PermissionsRepository;
 import com.santt4na.health_check.repository.UserRepository;
 import com.santt4na.health_check.security.jwt.JwtTokenProvider;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +28,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class AuthService {
 	
-	Logger logger = LoggerFactory.getLogger(AuthService.class);
+	private static final Logger logger = LoggerFactory.getLogger(Startup.class);
+	private static final Logger auditLogger = LoggerFactory.getLogger("audit");
+	
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -34,6 +46,18 @@ public class AuthService {
 	
 	@Autowired
 	private UserRepository repository;
+	
+	@Autowired
+	private DoctorRepository doctorRepository;
+	
+	@Autowired
+	private PermissionsRepository repositoryPermission;
+	
+	@Autowired
+	private UserMapper userMapper;
+	
+	@Autowired
+	private DoctorMapper doctorMapper;
 	
 	public ResponseEntity<TokenDTO> signIn(AccountCredentialsDTO credentials) {
 		authenticationManager.authenticate(
@@ -66,7 +90,42 @@ public class AuthService {
 		return ResponseEntity.ok(token);
 	}
 	
-	public AccountCredentialsDTO create(AccountCredentialsDTO user) {
+	@Transactional
+	public AccountCredentialsDTO registerDoctor(AccountCredentialsDTO user, DoctorRequestDTO doctor) {
+		
+		logger.info("Starting Create one new User Doctor");
+		auditLogger.info("Creating one new User!");
+		
+		if (user == null) throw new RequiredObjectIsNullException();
+		
+		if (repository.existsByUserName(user.getUsername())) {
+			throw new RuntimeException("Username already exists");
+		}
+		
+		User newUser = userMapper.toEntity(user);
+		
+		newUser.setPassword(generateHashedPassword(user.getPassword()));
+		
+		newUser.setAccountNonExpired(true);
+		newUser.setAccountNonLocked(true);
+		newUser.setCredentialsNonExpired(true);
+		newUser.setEnabled(true);
+		
+		Permission doctorPermission = repositoryPermission.findByDescription("DOCTOR")
+			.orElseThrow(() -> new RuntimeException("Permission 'DOCTOR' not found"));
+		
+		newUser.setPermissions(List.of(doctorPermission));
+		
+		repository.save(newUser);
+		
+		Doctor newDoctor = doctorMapper.toEntity(doctor);
+		newDoctor.setUser(newUser);
+		
+		doctorRepository.save(newDoctor);
+		return userMapper.toDTO(newUser);
+	}
+	
+	public AccountCredentialsDTO registerPatient(AccountCredentialsDTO user, PatientRequestDTO patient) {
 		
 		if (user == null) throw new RequiredObjectIsNullException();
 		
@@ -79,6 +138,13 @@ public class AuthService {
 		entity.setAccountNonLocked(true);
 		entity.setCredentialsNonExpired(true);
 		entity.setEnabled(true);
+		
+		Permission newPermission =  new Permission();
+		newPermission.setDescription("DOCTOR");
+		
+		List<Permission> permissions = new ArrayList<>();
+		permissions.add(newPermission);
+		entity.setPermissions(permissions);
 		
 		var dto = repository.save(entity);
 		return new AccountCredentialsDTO(dto.getUsername(), dto.getPassword(), dto.getFullName());

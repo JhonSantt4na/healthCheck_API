@@ -1,10 +1,10 @@
-package com.santt4na.health_check.service;
+package com.santt4na.health_check.service.impl;
 
 import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientResponseDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientUpdateDTO;
 import com.santt4na.health_check.entity.Appointment;
-import com.santt4na.health_check.service.impl.PatientService;
+import com.santt4na.health_check.service.PatientService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
