@@ -59,7 +59,7 @@ public interface AppointmentControllerDocs {
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
 		}
 	)
-	ResponseEntity<Void> cancelAppointment(@PathVariable Long id);
+	ResponseEntity<Void> cancelAppointment(@PathVariable Long id, @RequestBody String description);
 	
 	@Operation(
 		summary = "Retrieve an appointment by ID",
@@ -104,7 +104,7 @@ public interface AppointmentControllerDocs {
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
 		}
 	)
-	ResponseEntity<List<AppointmentResponseDTO>> findByDoctor(@PathVariable Long doctorId);
+	ResponseEntity<List<AppointmentResponseDTO>> getDoctorAppointments(@PathVariable Long doctorId);
 	
 	@Operation(
 		summary = "Retrieve appointments by patient ID",
@@ -119,5 +119,7 @@ public interface AppointmentControllerDocs {
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
 		}
 	)
-	ResponseEntity<List<AppointmentResponseDTO>> findByPatient(@PathVariable Long patientId);
+	ResponseEntity<List<AppointmentResponseDTO>> getPatientAppointments(@PathVariable Long patientId);
 }
+
+

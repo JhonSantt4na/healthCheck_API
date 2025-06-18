@@ -7,6 +7,8 @@ import com.santt4na.health_check.entity.Appointment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface AppointmentMapper {
 	
@@ -25,6 +27,7 @@ public interface AppointmentMapper {
 	Appointment updateToEntity(AppointmentUpdateDTO dto);
 	
 	AppointmentResponseDTO responseToDto(Appointment appointment);
+	List<AppointmentResponseDTO> responseListToDto(List<Appointment> appointment);
 	AppointmentRequestDTO requestToDto(Appointment appointment);
 	AppointmentUpdateDTO updatedToDto(Appointment appointment);
 }

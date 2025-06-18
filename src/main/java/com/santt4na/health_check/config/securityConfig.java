@@ -64,15 +64,17 @@ public class securityConfig {
 			)
 			.authorizeHttpRequests(
 				authorizeHttpRequests -> authorizeHttpRequests
-					.requestMatchers(
-						"/auth/signin",
-						"/auth/refresh/**",
-						"/auth/createUser",
-						"/swagger-ui/**",
-						"/v3/api-docs/**"
-					).permitAll()
-					.requestMatchers("/api/**").authenticated()
-					.requestMatchers("/users").denyAll()
+					
+					.anyRequest().permitAll()
+					//.requestMatchers(
+					//	"/auth/signin",
+					//	"/auth/refresh/**",
+					//	"/auth/createUser",
+					//	"/swagger-ui/**",
+					//	"/v3/api-docs/**"
+					//).permitAll()
+					//.requestMatchers("/api/**").authenticated()
+					//.requestMatchers("/users").denyAll()
 			)
 			.cors(cors -> {})
 			.build();

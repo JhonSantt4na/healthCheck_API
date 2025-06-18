@@ -4,7 +4,10 @@ import com.santt4na.health_check.controller.docs.AuthControllerDocs;
 import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
+import com.santt4na.health_check.dto.securityDTO.TokenDTO;
+import com.santt4na.health_check.entity.Doctor;
 import com.santt4na.health_check.service.security.AuthService;
+import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,8 +47,8 @@ public class AuthController implements AuthControllerDocs {
 		consumes = MediaType.APPLICATION_JSON_VALUE,
 		produces = MediaType.APPLICATION_JSON_VALUE)
 	@Override
-	public AccountCredentialsDTO registerDoctor(@RequestBody AccountCredentialsDTO credentials, @RequestBody DoctorRequestDTO doctor) {
-		return service.registerDoctor(credentials, doctor);
+	public ResponseEntity<TokenDTO> registerDoctor(@Valid @RequestBody AccountCredentialsDTO user, DoctorRequestDTO doctor) {
+		return service.registerDoctor(user, doctor);
 	}
 	
 	@PostMapping(value = "/registerPatient",

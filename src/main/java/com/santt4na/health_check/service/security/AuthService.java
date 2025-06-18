@@ -27,8 +27,6 @@ import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -36,7 +34,6 @@ public class AuthService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Startup.class);
 	private static final Logger auditLogger = LoggerFactory.getLogger("audit");
-	
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -90,8 +87,22 @@ public class AuthService {
 		return ResponseEntity.ok(token);
 	}
 	
+	private String generateHashedPassword(String password) {
+		
+		PasswordEncoder pbkdf2Encoder = new Pbkdf2PasswordEncoder(
+			"", 8, 185000,
+			Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
+		
+		Map<String, PasswordEncoder> encoders = new HashMap<>();
+		encoders.put("pbkdf2", pbkdf2Encoder);
+		DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);
+		
+		passwordEncoder.setDefaultPasswordEncoderForMatches(pbkdf2Encoder);
+		return passwordEncoder.encode(password);
+	}
+	
 	@Transactional
-	public AccountCredentialsDTO registerDoctor(AccountCredentialsDTO user, DoctorRequestDTO doctor) {
+	public ResponseEntity<TokenDTO> registerDoctor(AccountCredentialsDTO user, DoctorRequestDTO doctor) {
 		
 		logger.info("Starting Create one new User Doctor");
 		auditLogger.info("Creating one new User!");
@@ -103,9 +114,7 @@ public class AuthService {
 		}
 		
 		User newUser = userMapper.toEntity(user);
-		
 		newUser.setPassword(generateHashedPassword(user.getPassword()));
-		
 		newUser.setAccountNonExpired(true);
 		newUser.setAccountNonLocked(true);
 		newUser.setCredentialsNonExpired(true);
@@ -113,16 +122,24 @@ public class AuthService {
 		
 		Permission doctorPermission = repositoryPermission.findByDescription("DOCTOR")
 			.orElseThrow(() -> new RuntimeException("Permission 'DOCTOR' not found"));
-		
 		newUser.setPermissions(List.of(doctorPermission));
 		
 		repository.save(newUser);
 		
 		Doctor newDoctor = doctorMapper.toEntity(doctor);
 		newDoctor.setUser(newUser);
-		
 		doctorRepository.save(newDoctor);
-		return userMapper.toDTO(newUser);
+		
+		authenticationManager.authenticate(
+			new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+		);
+		
+		var token = tokenProvider.createAccessToken(
+			newUser.getUsername(),
+			newUser.getRoles()
+		);
+		
+		return ResponseEntity.ok(token);
 	}
 	
 	public AccountCredentialsDTO registerPatient(AccountCredentialsDTO user, PatientRequestDTO patient) {
@@ -148,19 +165,5 @@ public class AuthService {
 		
 		var dto = repository.save(entity);
 		return new AccountCredentialsDTO(dto.getUsername(), dto.getPassword(), dto.getFullName());
-	}
-	
-	private String generateHashedPassword(String password) {
-		
-		PasswordEncoder pbkdf2Encoder = new Pbkdf2PasswordEncoder(
-			"", 8, 185000,
-			Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
-		
-		Map<String, PasswordEncoder> encoders = new HashMap<>();
-		encoders.put("pbkdf2", pbkdf2Encoder);
-		DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);
-		
-		passwordEncoder.setDefaultPasswordEncoderForMatches(pbkdf2Encoder);
-		return passwordEncoder.encode(password);
 	}
 }

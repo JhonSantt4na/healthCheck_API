@@ -11,7 +11,7 @@ public interface AppointmentService {
 	
 	AppointmentResponseDTO updateAppointment(Long id, AppointmentRequestDTO dto);
 	
-	void cancelAppointment(Long id);
+	void cancelAppointment(Long id, String description);
 	
 	AppointmentResponseDTO findByIdAppointment(Long id);
 	
@@ -19,5 +19,7 @@ public interface AppointmentService {
 	
 	List<AppointmentResponseDTO> findByDoctor(Long doctorId);
 	
-	List<AppointmentResponseDTO> findByPatient(Long patientId);
+	List<AppointmentResponseDTO> getDoctorAppointments(Long doctorId);
+	
+	List<AppointmentResponseDTO> getPatientAppointments(Long patientId);
 }

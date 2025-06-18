@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface DoctorService {
 	
-	DoctorResponseDTO createDoctor(DoctorRequestDTO dto);
-	
 	DoctorResponseDTO updateDoctor(Long id, DoctorUpdateDTO dto);
 	
 	DoctorResponseDTO getDoctorById(Long id);
@@ -18,6 +16,4 @@ public interface DoctorService {
 	List<DoctorResponseDTO> listAllDoctors();
 	
 	void deleteDoctor(Long id);
-	
-	List<Appointment> getDoctorAppointments(Long doctorId);
 }

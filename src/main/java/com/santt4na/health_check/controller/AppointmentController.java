@@ -41,8 +41,8 @@ public class AppointmentController implements AppointmentControllerDocs {
 		produces = MediaType.APPLICATION_JSON_VALUE,
 		consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Override
-	public ResponseEntity<Void> cancelAppointment(@PathVariable Long id) {
-		service.cancelAppointment(id);
+	public ResponseEntity<Void> cancelAppointment(@PathVariable Long id, @RequestBody String description) {
+		service.cancelAppointment(id, description);
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -60,17 +60,17 @@ public class AppointmentController implements AppointmentControllerDocs {
 		return ResponseEntity.ok(service.findAllAppointment());
 	}
 	
-	@GetMapping(value = "findDoctor/{doctor}",
+	@GetMapping(value = "findDoctor/{doctorId}",
 		produces = MediaType.APPLICATION_JSON_VALUE)
 	@Override
-	public ResponseEntity<List<AppointmentResponseDTO>> findByDoctor(@PathVariable Long doctorId) {
-		return ResponseEntity.ok(service.findByDoctor(doctorId));
+	public ResponseEntity<List<AppointmentResponseDTO>> getDoctorAppointments(@PathVariable Long doctorId) {
+		return ResponseEntity.ok(service.getDoctorAppointments(doctorId));
 	}
 	
 	@GetMapping(value = "findPatient/{patient}",
 		produces = MediaType.APPLICATION_JSON_VALUE)
 	@Override
-	public ResponseEntity<List<AppointmentResponseDTO>> findByPatient(@PathVariable Long patientId) {
-		return ResponseEntity.ok(service.findByPatient(patientId));
+	public ResponseEntity<List<AppointmentResponseDTO>> getPatientAppointments(@PathVariable Long patientId) {
+		return ResponseEntity.ok(service.getPatientAppointments(patientId));
 	}
 }

@@ -3,6 +3,7 @@ package com.santt4na.health_check.controller.docs;
 import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
+import com.santt4na.health_check.dto.securityDTO.TokenDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -49,7 +50,7 @@ public interface AuthControllerDocs {
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
 		}
 	)
-	AccountCredentialsDTO registerDoctor(AccountCredentialsDTO credentials, DoctorRequestDTO doctor);
+	ResponseEntity<TokenDTO> registerDoctor(AccountCredentialsDTO user, DoctorRequestDTO doctor);
 	
 	@Operation(
 		summary = "Create a new Patient",
