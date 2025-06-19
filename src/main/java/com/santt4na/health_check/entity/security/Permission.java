@@ -1,5 +1,5 @@
 package com.santt4na.health_check.entity.security;
-
+/*
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -54,3 +54,4 @@ public class Permission implements GrantedAuthority, Serializable {
 		return Objects.hash(getId(), getDescription());
 	}
 }
+ */

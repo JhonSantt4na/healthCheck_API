@@ -2,10 +2,6 @@ package com.santt4na.health_check;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +13,7 @@ public class Startup {
 		//generateHashedPassword();
 	}
 	
-	private static void generateHashedPassword() {
+	/* private static void generateHashedPassword() {
 		
 		PasswordEncoder pbkdf2Encoder = new Pbkdf2PasswordEncoder(
 			"", 8, 185000,
@@ -34,4 +30,5 @@ public class Startup {
 		System.out.println(pass1);
 		System.out.println(pass2);
 	}
+	*/
 }

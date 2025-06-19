@@ -2,7 +2,8 @@ package com.santt4na.health_check.enums;
 
 public enum Specialty {
 	CARDIOLOGY,
-	DERMATOLOGY,
+	PEDIATRICS,
 	ORTHOPEDICS,
-	PEDIATRICS
+	DERMATOLOGY,
+	GENERAL_PRACTICE
 }

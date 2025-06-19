@@ -1,0 +1,96 @@
+.search-container {
+    width: 100%;
+    max-width: 800px;
+}
+.search-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #000000;
+}
+.search-box {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.search-input {
+    width: 100%;
+    padding: 15px 50px 15px 20px;
+    font-size: 1.2rem;
+    border: 2px solid #007bff;
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.search-input:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+.search-input::placeholder {
+    color: #007bff; /* Destaque no placeholder */
+    font-weight: 500;
+}
+.search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.search-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-50%) scale(1.1);
+}
+.search-btn i {
+    font-size: 1rem;
+}
+.specialties-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.specialty-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.specialty-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+@media (max-width: 767px) {
+    .search-container {
+        margin-top: 140px; /* Menos margem no mobile */
+        margin-bottom: 60px;
+    }
+    .search-title {
+        font-size: 2rem;
+    }
+    .search-input {
+        font-size: 1rem;
+        padding: 12px 45px 12px 15px;
+    }
+    .specialties-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .specialty-btn {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+}

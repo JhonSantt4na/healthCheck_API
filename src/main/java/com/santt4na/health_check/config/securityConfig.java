@@ -1,5 +1,5 @@
 package com.santt4na.health_check.config;
-
+/*
 import com.santt4na.health_check.security.JwtTokenFilter;
 import com.santt4na.health_check.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,3 +80,4 @@ public class securityConfig {
 			.build();
 	}
 }
+*/

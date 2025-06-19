@@ -1,9 +1,10 @@
 package com.santt4na.health_check.entity.security;
-
+/*
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.Email;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,6 +28,10 @@ public class User implements UserDetails, Serializable {
 	
 	@Column(name = "full_name")
 	private String fullName;
+	
+	@Email
+	@Column
+	private String email;
 	
 	@Column
 	private String password;
@@ -103,6 +108,10 @@ public class User implements UserDetails, Serializable {
 		this.id = id;
 	}
 	
+	public String getUserName() {
+		return userName;
+	}
+	
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
@@ -113,6 +122,14 @@ public class User implements UserDetails, Serializable {
 	
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public void setPassword(String password) {
@@ -163,11 +180,13 @@ public class User implements UserDetails, Serializable {
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		User user = (User) o;
-		return Objects.equals(getId(), user.getId()) && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getFullName(), user.getFullName()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(isAccountNonExpired(), user.isAccountNonExpired()) && Objects.equals(isAccountNonLocked(), user.isAccountNonLocked()) && Objects.equals(isCredentialsNonExpired(), user.isCredentialsNonExpired()) && Objects.equals(isEnabled(), user.isEnabled()) && Objects.equals(getPermissions(), user.getPermissions());
+		return Objects.equals(id, user.id) && Objects.equals(userName, user.userName) && Objects.equals(fullName, user.fullName) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(accountNonExpired, user.accountNonExpired) && Objects.equals(accountNonLocked, user.accountNonLocked) && Objects.equals(credentialsNonExpired, user.credentialsNonExpired) && Objects.equals(enabled, user.enabled) && Objects.equals(permissions, user.permissions);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getUsername(), getFullName(), getPassword(), isAccountNonExpired(), isAccountNonLocked(), isCredentialsNonExpired(), isEnabled(), getPermissions());
+		return Objects.hash(id, userName, fullName, email, password, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, permissions);
 	}
 }
+
+*/

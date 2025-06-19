@@ -1,5 +1,5 @@
 package com.santt4na.health_check.controller;
-
+/*
 import com.santt4na.health_check.controller.docs.AuthControllerDocs;
 import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
@@ -69,3 +69,4 @@ public class AuthController implements AuthControllerDocs {
 			StringUtils.isBlank(credentials.getUsername());
 	}
 }
+*/

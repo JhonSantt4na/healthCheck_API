@@ -1,14 +1,13 @@
 package com.santt4na.health_check.entity;
 
-import com.santt4na.health_check.entity.security.User;
 import com.santt4na.health_check.enums.Gender;
 import com.santt4na.health_check.enums.Specialty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.proxy.HibernateProxy;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -35,6 +34,11 @@ public class Doctor implements Serializable {
 	@Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
 	private String fullName;
 	
+	@Email
+	@NotNull(message = "Email cannot be null")
+	@Column(nullable = false, unique = true)
+	private String email;
+	
 	@NotNull(message = "Gender cannot be null")
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
@@ -53,12 +57,17 @@ public class Doctor implements Serializable {
 	private String medicalLicense; // CRM
 	
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Schedule> availableSchedules = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
 	@ToString.Exclude
 	private List<Appointment> appointments = new ArrayList<>();
 	
+	/*
 	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
 	private User user;
+	*/
 	
 	@CreationTimestamp
 	private LocalDateTime createdAt;
@@ -83,6 +92,14 @@ public class Doctor implements Serializable {
 	
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public Gender getGender() {
@@ -117,20 +134,20 @@ public class Doctor implements Serializable {
 		this.medicalLicense = medicalLicense;
 	}
 	
+	public List<Schedule> getAvailableSchedules() {
+		return availableSchedules;
+	}
+	
+	public void setAvailableSchedules(List<Schedule> availableSchedules) {
+		this.availableSchedules = availableSchedules;
+	}
+	
 	public List<Appointment> getAppointments() {
 		return appointments;
 	}
 	
 	public void setAppointments(List<Appointment> appointments) {
 		this.appointments = appointments;
-	}
-	
-	public User getUser() {
-		return user;
-	}
-	
-	public void setUser(User user) {
-		this.user = user;
 	}
 	
 	public LocalDateTime getCreatedAt() {
@@ -153,11 +170,11 @@ public class Doctor implements Serializable {
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		Doctor doctor = (Doctor) o;
-		return Objects.equals(id, doctor.id) && Objects.equals(fullName, doctor.fullName) && gender == doctor.gender && Objects.equals(phone, doctor.phone) && specialty == doctor.specialty && Objects.equals(medicalLicense, doctor.medicalLicense) && Objects.equals(appointments, doctor.appointments) && Objects.equals(user, doctor.user) && Objects.equals(createdAt, doctor.createdAt) && Objects.equals(updatedAt, doctor.updatedAt);
+		return Objects.equals(id, doctor.id) && Objects.equals(fullName, doctor.fullName) && Objects.equals(email, doctor.email) && gender == doctor.gender && Objects.equals(phone, doctor.phone) && specialty == doctor.specialty && Objects.equals(medicalLicense, doctor.medicalLicense) && Objects.equals(availableSchedules, doctor.availableSchedules) && Objects.equals(appointments, doctor.appointments) && Objects.equals(createdAt, doctor.createdAt) && Objects.equals(updatedAt, doctor.updatedAt);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, fullName, gender, phone, specialty, medicalLicense, appointments, user, createdAt, updatedAt);
+		return Objects.hash(id, fullName, email, gender, phone, specialty, medicalLicense, availableSchedules, appointments, createdAt, updatedAt);
 	}
 }

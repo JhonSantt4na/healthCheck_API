@@ -1,0 +1,8 @@
+.consulta-lista {
+    margin-top: 20px;
+}
+.consulta-lista li {
+    list-style: none;
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+}

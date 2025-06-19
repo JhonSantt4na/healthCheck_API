@@ -1,16 +1,18 @@
 package com.santt4na.health_check.entity;
 
+/*
+import com.santt4na.health_check.entity.security.User;
+import org.hibernate.proxy.HibernateProxy;
+import java.util.Objects;
+*/
+
 import com.santt4na.health_check.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.proxy.HibernateProxy;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -31,6 +33,11 @@ public class Patient implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Email
+	@NotNull(message = "Email cannot be null")
+	@Column(nullable = false, unique = true)
+	private String email;
+	
 	@NotNull(message = "Name cannot be null")
 	@Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
 	private String fullName;
@@ -50,6 +57,12 @@ public class Patient implements Serializable {
 	@NotNull(message = "CPF cannot be null")
 	@Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}", message = "Invalid CPF format")
 	private String cpf;
+	
+	/*
+	@OneToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
+	private User user;
+	*/
 	
 	@Size(max = 50, message = "Health insurance must not exceed 50 characters")
 	private String healthInsurance;
@@ -75,6 +88,14 @@ public class Patient implements Serializable {
 		this.id = id;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public String getFullName() {
 		return fullName;
 	}
@@ -83,20 +104,20 @@ public class Patient implements Serializable {
 		this.fullName = fullName;
 	}
 	
-	public String getPhone() {
-		return phone;
-	}
-	
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	
 	public Gender getGender() {
 		return gender;
 	}
 	
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 	public LocalDate getDateOfBirth() {
@@ -148,18 +169,14 @@ public class Patient implements Serializable {
 	}
 	
 	@Override
-	public final boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null) return false;
-		Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-		Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-		if (thisEffectiveClass != oEffectiveClass) return false;
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
 		Patient patient = (Patient) o;
-		return getId() != null && Objects.equals(getId(), patient.getId());
+		return Objects.equals(id, patient.id) && Objects.equals(email, patient.email) && Objects.equals(fullName, patient.fullName) && gender == patient.gender && Objects.equals(phone, patient.phone) && Objects.equals(dateOfBirth, patient.dateOfBirth) && Objects.equals(cpf, patient.cpf) && Objects.equals(healthInsurance, patient.healthInsurance) && Objects.equals(appointments, patient.appointments) && Objects.equals(createdAt, patient.createdAt) && Objects.equals(updatedAt, patient.updatedAt);
 	}
 	
 	@Override
-	public final int hashCode() {
-		return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+	public int hashCode() {
+		return Objects.hash(id, email, fullName, gender, phone, dateOfBirth, cpf, healthInsurance, appointments, createdAt, updatedAt);
 	}
 }

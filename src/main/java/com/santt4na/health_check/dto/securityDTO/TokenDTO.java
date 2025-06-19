@@ -1,5 +1,5 @@
 package com.santt4na.health_check.dto.securityDTO;
-
+/*
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
@@ -90,3 +90,4 @@ public class TokenDTO implements Serializable {
 		return Objects.hash(getUsername(), getAuthenticated(), getCreated(), getExpiration(), getAccessToken(), getRefreshToken());
 	}
 }
+*/

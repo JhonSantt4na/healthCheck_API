@@ -10,7 +10,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
   properties:
     hibernate:
@@ -18,12 +18,19 @@ spring:
   database-platform: org.hibernate.dialect.MySQLDialect
 
   flyway:
-    enabled: true
-    baseline-on-migrate: true
+    enabled: false
+    baseline-on-migrate: false
     locations: classpath:db/migration
-    validate-on-migrate: true
+    validate-on-migrate: false
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
 
 security:
+  enabled: false
   jwt:
     token:
       secret-key: 53cr37

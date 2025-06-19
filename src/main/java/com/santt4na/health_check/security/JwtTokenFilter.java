@@ -1,5 +1,5 @@
 package com.santt4na.health_check.security;
-
+/*
 import com.santt4na.health_check.security.jwt.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -36,3 +36,4 @@ public class JwtTokenFilter extends GenericFilterBean {
 		filter.doFilter(request, response);
 	}
 }
+*/

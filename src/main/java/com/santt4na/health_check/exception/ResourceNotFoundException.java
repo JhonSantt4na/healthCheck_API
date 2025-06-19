@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ResourceNotFoundException extends RuntimeException {
 	
 	public ResourceNotFoundException() {
-		super("Doctor not found by Id!");
+		super("Object not found by Id!");
 	}
 	
 	public ResourceNotFoundException(String message) {

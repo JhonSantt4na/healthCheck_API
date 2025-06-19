@@ -72,4 +72,5 @@ public class PatientServiceImpl implements PatientService {
 		repository.delete(patient);
 		auditLogger.info("Audit: Deleted Patient with ID {}", id);
 	}
+	
 }

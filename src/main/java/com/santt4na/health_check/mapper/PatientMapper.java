@@ -15,15 +15,15 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 )
 public interface PatientMapper {
 	
-	@Mapping(target = "updatedAt", ignore = true)
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "createdAt", ignore = true)
+	@Mapping(target = "updatedAt", ignore = true)
 	@Mapping(target = "appointments", ignore = true)
 	Patient toEntity(PatientRequestDTO dto);
 	
-	@Mapping(target = "updatedAt", ignore = true)
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "createdAt", ignore = true)
+	@Mapping(target = "updatedAt", ignore = true)
 	@Mapping(target = "appointments", ignore = true)
 	void updateEntityFromDto(PatientUpdateDTO dto, @MappingTarget Patient entity);
 	

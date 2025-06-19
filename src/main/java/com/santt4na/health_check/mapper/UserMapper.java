@@ -1,5 +1,5 @@
 package com.santt4na.health_check.mapper;
-
+/*
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
 import com.santt4na.health_check.entity.security.User;
 import org.mapstruct.Mapper;
@@ -20,3 +20,5 @@ public interface UserMapper {
 	
 	public abstract AccountCredentialsDTO toDTO(User user);
 }
+
+*/

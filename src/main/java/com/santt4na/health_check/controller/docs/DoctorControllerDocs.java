@@ -1,6 +1,5 @@
 package com.santt4na.health_check.controller.docs;
 
-import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorResponseDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorUpdateDTO;
 import io.swagger.v3.oas.annotations.Operation;

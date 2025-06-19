@@ -1,5 +1,6 @@
 package com.santt4na.health_check.service.security;
 
+/*
 import com.santt4na.health_check.Startup;
 import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
@@ -164,6 +165,7 @@ public class AuthService {
 		entity.setPermissions(permissions);
 		
 		var dto = repository.save(entity);
-		return new AccountCredentialsDTO(dto.getUsername(), dto.getPassword(), dto.getFullName());
+		return new AccountCredentialsDTO(dto.getUsername(), dto.getPassword(), dto.getFullName(),dto.getEmail());
 	}
 }
+*/

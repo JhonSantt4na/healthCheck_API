@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="content">
+    <!-- Conteúdo Central -->
+    <div class="search-container text-center">
+        <h1 class="search-title mb-4">Encontre o Melhor <span class="highlight">Especialista</span><br> e Agende com Eficiencia !</h1>
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="Busque um Doutor"/>
+            <button class="search-btn" type="button"><i class="bi bi-search"></i></button>
+        </div>
+    </div>
+    <!-- Botões de Especialidades -->
+    <div class="specialties-container text-center mt-5">
+        <a href="/especialidades/cardiologia" class="specialty-btn">Cardiologia</a>
+        <a href="/especialidades/pediatria" class="specialty-btn">Pediatria</a>
+        <a href="/especialidades/ortopedia" class="specialty-btn">Ortopedia</a>
+    </div>
+
+    <!-- JavaScript para Placeholder Dinâmico -->
+    <script>
+        const input = document.getElementById('searchInput');
+        const placeholders = ['Busque um Doutor', 'Busque uma Especialidade'];
+        let index = 0;
+
+        setInterval(() => {
+            input.placeholder = placeholders[index];
+            index = (index + 1) % placeholders.length;
+        }, 3000);
+    </script>
+</div>
+</html>

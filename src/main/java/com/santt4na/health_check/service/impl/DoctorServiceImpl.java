@@ -77,4 +77,5 @@ public class DoctorServiceImpl implements DoctorService {
 		repository.delete(doctor);
 		auditLogger.info("Audit: Deleted doctor with ID {}", id);
 	}
+	
 }

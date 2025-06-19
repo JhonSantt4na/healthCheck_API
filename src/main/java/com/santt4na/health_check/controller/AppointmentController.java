@@ -1,10 +1,14 @@
 package com.santt4na.health_check.controller;
 
-import com.santt4na.health_check.controller.docs.AppointmentControllerDocs;
+import com.santt4na.health_check.dto.scheduleDTO.ScheduleResponseDTO;
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentRequestDTO;
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentResponseDTO;
-import com.santt4na.health_check.service.impl.AppointmentServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.santt4na.health_check.dto.appointmentDTO.AppointmentUpdateDTO;
+import com.santt4na.health_check.service.AppointmentService;
+import com.santt4na.health_check.service.ScheduleService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,64 +17,84 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/appointment")
-public class AppointmentController implements AppointmentControllerDocs {
+@RequestMapping("/api/appointments")
+public class AppointmentController {
 	
-	@Autowired
-	private AppointmentServiceImpl service;
+	private final AppointmentService appointmentService;
+	private final ScheduleService scheduleService;
 	
-	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@Override
-	public ResponseEntity<AppointmentResponseDTO> createAppointment(@RequestBody AppointmentRequestDTO dto) {
-		AppointmentResponseDTO created = service.createAppointment(dto);
+	public AppointmentController(AppointmentService appointmentService, ScheduleService scheduleService) {
+		this.appointmentService = appointmentService;
+		this.scheduleService = scheduleService;
+	}
+	
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AppointmentResponseDTO> createAppointment(
+		@Valid @RequestBody AppointmentRequestDTO dto) {
+		
+		AppointmentResponseDTO created = appointmentService.createAppointment(dto);
 		return ResponseEntity
-			.created(URI.create("/api/appointments" + created.id()))
+			.created(URI.create("/api/appointments/" + created.id()))
 			.body(created);
 	}
 	
-	@PutMapping(value = "/{id}",
-		produces = MediaType.APPLICATION_JSON_VALUE,
-		consumes = MediaType.APPLICATION_JSON_VALUE)
-	@Override
-	public ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable Long id, @RequestBody AppointmentRequestDTO dto) {
-		AppointmentResponseDTO updated = service.updateAppointment(id, dto);
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable Long id, @Valid @RequestBody AppointmentUpdateDTO dto) {
+		AppointmentResponseDTO updated = appointmentService.updateAppointment(id, dto);
 		return ResponseEntity.ok(updated);
 	}
 	
-	@PutMapping(value = "/cancel/{id}",
-		produces = MediaType.APPLICATION_JSON_VALUE,
-		consumes = MediaType.APPLICATION_JSON_VALUE)
-	@Override
-	public ResponseEntity<Void> cancelAppointment(@PathVariable Long id, @RequestBody String description) {
-		service.cancelAppointment(id, description);
+	@PutMapping(value = "/cancel/{id}")
+	public ResponseEntity<Void> cancelAppointment(@PathVariable Long id, @RequestParam String reason) {
+		appointmentService.cancelAppointment(id, reason);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping(value = "/{id}",
-		produces = MediaType.APPLICATION_JSON_VALUE)
-	@Override
-	public ResponseEntity<AppointmentResponseDTO> findByIdAppointment(@PathVariable Long id) {
-		AppointmentResponseDTO found = service.findByIdAppointment(id);
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AppointmentResponseDTO> findById(@PathVariable Long id) {
+		AppointmentResponseDTO found = appointmentService.findByIdAppointment(id);
 		return ResponseEntity.ok(found);
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	@Override
-	public ResponseEntity<List<AppointmentResponseDTO>> findAllAppointment() {
-		return ResponseEntity.ok(service.findAllAppointment());
+	public ResponseEntity<List<AppointmentResponseDTO>> findAll() {
+		List<AppointmentResponseDTO> list = appointmentService.findAllAppointment();
+		return ResponseEntity.ok(list);
 	}
 	
-	@GetMapping(value = "findDoctor/{doctorId}",
-		produces = MediaType.APPLICATION_JSON_VALUE)
-	@Override
+	@GetMapping(value = "/doctor/{doctorId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AppointmentResponseDTO>> getDoctorAppointments(@PathVariable Long doctorId) {
-		return ResponseEntity.ok(service.getDoctorAppointments(doctorId));
+		List<AppointmentResponseDTO> list = appointmentService.getDoctorAppointments(doctorId);
+		return ResponseEntity.ok(list);
 	}
 	
-	@GetMapping(value = "findPatient/{patient}",
-		produces = MediaType.APPLICATION_JSON_VALUE)
-	@Override
+	@GetMapping(value = "/patient/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AppointmentResponseDTO>> getPatientAppointments(@PathVariable Long patientId) {
-		return ResponseEntity.ok(service.getPatientAppointments(patientId));
+		List<AppointmentResponseDTO> list = appointmentService.getPatientAppointments(patientId);
+		return ResponseEntity.ok(list);
+	}
+	
+	@PutMapping(value = "/{id}/confirm", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AppointmentResponseDTO> confirmAppointment(@PathVariable Long id) {
+		AppointmentResponseDTO confirmed = appointmentService.confirmAppointment(id);
+		return ResponseEntity.ok(confirmed);
+	}
+	
+	@PutMapping(value = "/{id}/cancel/doctor", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AppointmentResponseDTO> cancelByDoctor(@PathVariable Long id, @RequestParam String reason) {
+		AppointmentResponseDTO cancelled = appointmentService.cancelAppointmentByDoctor(id, reason);
+		return ResponseEntity.ok(cancelled);
+	}
+	
+	@PutMapping(value = "/{id}/cancel/patient", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AppointmentResponseDTO> cancelByPatient(@PathVariable Long id, @RequestParam String reason) {
+		AppointmentResponseDTO cancelled = appointmentService.cancelAppointmentByPatient(id, reason);
+		return ResponseEntity.ok(cancelled);
+	}
+	
+	@GetMapping(value = "/doctor/{doctorId}/available-schedules", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ScheduleResponseDTO>> getAvailableSchedules(@PathVariable Long doctorId) {
+		List<ScheduleResponseDTO> available = scheduleService.findByDoctorId(doctorId);
+		return ResponseEntity.ok(available);
 	}
 }
