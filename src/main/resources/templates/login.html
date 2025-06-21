@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Sistema de Saúde</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gradient-start: #4361ee;
+            --gradient-end: #3a0ca3;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            min-height: 600px;
+        }
+
+        .login-left {
+            flex: 1;
+            background: linear-gradient(rgba(67, 97, 238, 0.85), rgba(67, 97, 238, 0.85)),
+                        url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3') center/cover;
+            color: white;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .login-left::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            opacity: 0.9;
+            z-index: 0;
+        }
+
+        .login-left-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-left h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .login-left p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .features i {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-right {
+            flex: 1;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo i {
+            font-size: 3rem;
+            color: var(--primary);
+            background: rgba(67, 97, 238, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .logo p {
+            color: #6c757d;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 42px;
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+
+        .form-control {
+            height: 50px;
+            border-radius: 10px;
+            padding-left: 45px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 42px;
+            cursor: pointer;
+            color: #6c757d;
+        }
+
+        .btn-login {
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            border: none;
+            color: white;
+            height: 50px;
+            width: 50px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(67, 97, 238, 0.4);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 7px;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #e9ecef;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e9ecef;
+            color: #6c757d;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: transparent;
+        }
+
+        .social-btn.facebook:hover {
+            background: #3b5998;
+            color: white;
+        }
+
+        .social-btn.google:hover {
+            background: #dd4b39;
+            color: white;
+        }
+
+        .social-btn.twitter:hover {
+            background: #1da1f2;
+            color: white;
+        }
+
+        .signup-link {
+            text-align: center;
+            color: #6c757d;
+            margin-top: 20px;
+        }
+
+        .signup-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .signup-link a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fff0f0;
+            color: #e74c3c;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .error-message i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 992px) {
+            .login-left {
+                display: none;
+            }
+
+            .login-container {
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .login-right {
+                padding: 40px 25px;
+            }
+
+            .options {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <div class="login-left">
+        <div class="login-left-content">
+            <h2>Bem-vindo ao Sistema de Saúde</h2>
+            <p>Faça login para acessar sua conta e gerenciar suas informações de saúde de forma segura e conveniente.</p>
+
+            <ul class="features">
+                <li>
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Segurança e privacidade dos seus dados</span>
+                </li>
+                <li>
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Acompanhamento completo da sua saúde</span>
+                </li>
+                <li>
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Agendamento de consultas simplificado</span>
+                </li>
+                <li>
+                    <i class="fas fa-file-medical"></i>
+                    <span>Acesso aos seus exames e históricos</span>
+                </li>
+            </ul>
+
+            <p>Nossa plataforma oferece a melhor experiência para cuidar da sua saúde com tecnologia de ponta.</p>
+        </div>
+    </div>
+
+    <div class="login-right">
+        <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <h1>HealthCheck</h1>
+            <p>Sua saúde em primeiro lugar</p>
+        </div>
+
+        <!-- Mensagem de erro -->
+        <div class="error-message" th:if="${param.error}">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Credenciais inválidas. Por favor, tente novamente.</span>
+        </div>
+
+        <form th:action="@{/signin}" method="post">
+            <div class="form-group">
+                <label for="username" class="form-label">Usuário</label>
+                <div class="position-relative">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Digite seu usuário" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Senha</label>
+                <div class="position-relative">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Digite sua senha" required>
+                    <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                </div>
+            </div>
+
+            <div class="options">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Lembrar-me</label>
+                </div>
+                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            </div>
+
+            <button type="submit" class="btn btn-login w-100">Entrar</button>
+        </form>
+
+        <div class="divider">
+            <span>Ou continue com</span>
+        </div>
+
+        <div class="social-login">
+            <a href="#" class="social-btn facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-btn google">
+                <i class="fab fa-google"></i>
+            </a>
+            <a href="#" class="social-btn twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+        <div class="signup-link">
+            Não tem uma conta? <a href="#">Criar conta</a>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
+<script>
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Toggle eye icon
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    // Form validation
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (!username || !password) {
+            e.preventDefault();
+            alert('Por favor, preencha todos os campos.');
+        }
+    });
+
+    // Add animation on load
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginContainer = document.querySelector('.login-container');
+        loginContainer.style.opacity = '0';
+        loginContainer.style.transform = 'translateY(20px)';
+
+        setTimeout(() => {
+            loginContainer.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            loginContainer.style.opacity = '1';
+            loginContainer.style.transform = 'translateY(0)';
+        }, 100);
+    });
+</script>
+</body>
+</html>

@@ -1,11 +1,10 @@
 package com.santt4na.health_check.controller;
-/*
+
 import com.santt4na.health_check.controller.docs.AuthControllerDocs;
 import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
 import com.santt4na.health_check.dto.securityDTO.TokenDTO;
-import com.santt4na.health_check.entity.Doctor;
 import com.santt4na.health_check.service.security.AuthService;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
@@ -13,14 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/auth")
 public class AuthController implements AuthControllerDocs {
 	
 	@Autowired
 	private AuthService service;
+	
+	@GetMapping("/login")
+	public String showLoginPage() {
+		return "login";
+	}
 	
 	@PostMapping("/signin")
 	@Override
@@ -66,7 +71,6 @@ public class AuthController implements AuthControllerDocs {
 	private static boolean credentialsIsInvalid(AccountCredentialsDTO credentials) {
 		return credentials == null ||
 			StringUtils.isBlank(credentials.getPassword()) ||
-			StringUtils.isBlank(credentials.getUsername());
+			StringUtils.isBlank(credentials.getUserName());
 	}
 }
-*/

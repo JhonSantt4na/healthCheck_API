@@ -1,6 +1,5 @@
 package com.santt4na.health_check.service.security;
 
-/*
 import com.santt4na.health_check.Startup;
 import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
@@ -60,18 +59,18 @@ public class AuthService {
 	public ResponseEntity<TokenDTO> signIn(AccountCredentialsDTO credentials) {
 		authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(
-				credentials.getUsername(),
+				credentials.getUserName(),
 				credentials.getPassword()
 			)
 		);
 		
-		var user = repository.findByUsername(credentials.getUsername());
+		var user = repository.findByUsername(credentials.getUserName());
 		if (user == null) {
-			throw new UsernameNotFoundException("Username " + credentials.getUsername() + " not found!");
+			throw new UsernameNotFoundException("Username " + credentials.getUserName() + " not found!");
 		}
 		
 		var token = tokenProvider.createAccessToken(
-			credentials.getUsername(),
+			credentials.getUserName(),
 			user.getRoles()
 		);
 		return ResponseEntity.ok(token);
@@ -110,7 +109,7 @@ public class AuthService {
 		
 		if (user == null) throw new RequiredObjectIsNullException();
 		
-		if (repository.existsByUserName(user.getUsername())) {
+		if (repository.existsByUserName(user.getUserName())) {
 			throw new RuntimeException("Username already exists");
 		}
 		
@@ -132,7 +131,7 @@ public class AuthService {
 		doctorRepository.save(newDoctor);
 		
 		authenticationManager.authenticate(
-			new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+			new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword())
 		);
 		
 		var token = tokenProvider.createAccessToken(
@@ -143,14 +142,15 @@ public class AuthService {
 		return ResponseEntity.ok(token);
 	}
 	
+	@Transactional
 	public AccountCredentialsDTO registerPatient(AccountCredentialsDTO user, PatientRequestDTO patient) {
 		
 		if (user == null) throw new RequiredObjectIsNullException();
 		
 		logger.info("Creating one new User!");
 		var entity = new User();
-		entity.setFullName(user.getFullname());
-		entity.setUserName(user.getUsername());
+		entity.setFullName(user.getUserName());
+		entity.setUserName(user.getUserName());
 		entity.setPassword(generateHashedPassword(user.getPassword()));
 		entity.setAccountNonExpired(true);
 		entity.setAccountNonLocked(true);
@@ -165,7 +165,6 @@ public class AuthService {
 		entity.setPermissions(permissions);
 		
 		var dto = repository.save(entity);
-		return new AccountCredentialsDTO(dto.getUsername(), dto.getPassword(), dto.getFullName(),dto.getEmail());
+		return new AccountCredentialsDTO(dto.getUserName(), dto.getPassword(), dto.getFullName(),dto.getEmail());
 	}
 }
-*/

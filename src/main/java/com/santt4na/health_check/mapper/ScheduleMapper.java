@@ -12,6 +12,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ScheduleMapper {
 	
+	@Mapping(target = "appointments", ignore = true)
 	@Mapping(target = "doctor", ignore = true)
 	@Mapping(target = "id", ignore = true)
 	Schedule toEntity(ScheduleRequestDTO dto);
@@ -20,6 +21,7 @@ public interface ScheduleMapper {
 	@Mapping(target = "doctorName", source = "doctor.fullName")
 	ScheduleResponseDTO responseDto(Schedule schedule);
 	
+	@Mapping(target = "appointments", ignore = true)
 	@Mapping(target = "doctor", ignore = true)
 	@Mapping(target = "id", ignore = true)
 	void updateEntityFromDto(ScheduleUpdateDTO dto, @MappingTarget Schedule entity);

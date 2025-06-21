@@ -1,5 +1,6 @@
 package com.santt4na.health_check.entity;
 
+import com.santt4na.health_check.entity.security.User;
 import com.santt4na.health_check.enums.Gender;
 import com.santt4na.health_check.enums.Specialty;
 import jakarta.persistence.*;
@@ -63,11 +64,9 @@ public class Doctor implements Serializable {
 	@ToString.Exclude
 	private List<Appointment> appointments = new ArrayList<>();
 	
-	/*
 	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
 	private User user;
-	*/
 	
 	@CreationTimestamp
 	private LocalDateTime createdAt;
@@ -150,6 +149,14 @@ public class Doctor implements Serializable {
 		this.appointments = appointments;
 	}
 	
+	public User getUser() {
+		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
@@ -170,11 +177,11 @@ public class Doctor implements Serializable {
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		Doctor doctor = (Doctor) o;
-		return Objects.equals(id, doctor.id) && Objects.equals(fullName, doctor.fullName) && Objects.equals(email, doctor.email) && gender == doctor.gender && Objects.equals(phone, doctor.phone) && specialty == doctor.specialty && Objects.equals(medicalLicense, doctor.medicalLicense) && Objects.equals(availableSchedules, doctor.availableSchedules) && Objects.equals(appointments, doctor.appointments) && Objects.equals(createdAt, doctor.createdAt) && Objects.equals(updatedAt, doctor.updatedAt);
+		return Objects.equals(id, doctor.id) && Objects.equals(fullName, doctor.fullName) && Objects.equals(email, doctor.email) && gender == doctor.gender && Objects.equals(phone, doctor.phone) && specialty == doctor.specialty && Objects.equals(medicalLicense, doctor.medicalLicense) && Objects.equals(availableSchedules, doctor.availableSchedules) && Objects.equals(appointments, doctor.appointments) && Objects.equals(user, doctor.user) && Objects.equals(createdAt, doctor.createdAt) && Objects.equals(updatedAt, doctor.updatedAt);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, fullName, email, gender, phone, specialty, medicalLicense, availableSchedules, appointments, createdAt, updatedAt);
+		return Objects.hash(id, fullName, email, gender, phone, specialty, medicalLicense, availableSchedules, appointments, user, createdAt, updatedAt);
 	}
 }

@@ -77,8 +77,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 		Schedule schedule = scheduleRepository.findById(dto.scheduleId())
 			.orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
 		
-		if (!dto.appointmentDate().isEqual(schedule.getStartTime())) {
-			throw new BusinessException("A data do agendamento deve coincidir com o início do horário marcado");
+		if (!dto.appointmentDate().isEqual(schedule.getStartTime()))  {
+			throw new BusinessException("A data do agendamento deve coincidir...");
 		}
 		
 		if (doctor == null || patient == null) {

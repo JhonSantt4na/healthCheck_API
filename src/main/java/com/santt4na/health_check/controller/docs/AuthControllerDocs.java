@@ -1,6 +1,5 @@
 package com.santt4na.health_check.controller.docs;
 
-/*
 import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
@@ -66,4 +65,3 @@ public interface AuthControllerDocs {
 	)
 	AccountCredentialsDTO registerPatient(AccountCredentialsDTO credentials, PatientRequestDTO patient);
 }
-*/

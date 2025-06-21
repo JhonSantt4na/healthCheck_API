@@ -1,9 +1,6 @@
 package com.santt4na.health_check.exception.handler;
-/*
-import com.santt4na.health_check.exception.DuplicateEmailException;
-import com.santt4na.health_check.exception.InvalidJwtAuthenticationException;
-import com.santt4na.health_check.exception.RequiredObjectIsNullException;
-import com.santt4na.health_check.exception.ResourceNotFoundException;
+
+import com.santt4na.health_check.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -73,4 +70,3 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
 	}
 	
 }
-*/

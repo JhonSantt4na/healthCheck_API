@@ -1,5 +1,5 @@
 package com.santt4na.health_check.service.security;
-/*
+
 import com.santt4na.health_check.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,4 +24,3 @@ public class UserService implements UserDetailsService {
 		else throw new UsernameNotFoundException("Username "+ username +" not found!");
 	}
 }
-*/
