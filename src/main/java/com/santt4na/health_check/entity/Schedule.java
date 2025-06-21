@@ -1,6 +1,7 @@
 package com.santt4na.health_check.entity;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Setter
 @Getter
+@EqualsAndHashCode
 public class Schedule implements Serializable {
 	
 	@Serial
@@ -48,17 +50,5 @@ public class Schedule implements Serializable {
 		if (!endTime.isAfter(startTime)) {
 			throw new IllegalStateException("End time must be after start time");
 		}
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass()) return false;
-		Schedule schedule = (Schedule) o;
-		return Objects.equals(id, schedule.id) && Objects.equals(doctor, schedule.doctor) && Objects.equals(appointments, schedule.appointments) && Objects.equals(startTime, schedule.startTime) && Objects.equals(endTime, schedule.endTime) && Objects.equals(available, schedule.available);
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, doctor, appointments, startTime, endTime, available);
 	}
 }

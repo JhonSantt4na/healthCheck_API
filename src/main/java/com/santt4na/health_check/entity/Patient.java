@@ -21,6 +21,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Setter
 @Getter
+@EqualsAndHashCode
 public class Patient implements Serializable {
 	
 	@Serial
@@ -67,16 +68,4 @@ public class Patient implements Serializable {
 	
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
-	
-	@Override
-	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass()) return false;
-		Patient patient = (Patient) o;
-		return Objects.equals(id, patient.id) && Objects.equals(email, patient.email) && Objects.equals(fullName, patient.fullName) && gender == patient.gender && Objects.equals(phone, patient.phone) && Objects.equals(dateOfBirth, patient.dateOfBirth) && Objects.equals(cpf, patient.cpf) && Objects.equals(healthInsurance, patient.healthInsurance) && Objects.equals(appointments, patient.appointments) && Objects.equals(createdAt, patient.createdAt) && Objects.equals(updatedAt, patient.updatedAt);
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, email, fullName, gender, phone, dateOfBirth, cpf, healthInsurance, appointments, createdAt, updatedAt);
-	}
 }
