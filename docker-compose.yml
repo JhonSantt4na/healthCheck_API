@@ -1,7 +1,5 @@
-version: '3.8'
-
 services:
-  mysql:
+  healthcheck_db:
     image: mysql:8.0
     container_name: mysql_healthCheck
     environment:
