@@ -5,6 +5,7 @@ import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientResponseDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientUpdateDTO;
 import com.santt4na.health_check.service.impl.PatientServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/patient")
+@RequiredArgsConstructor
 public class PatientController implements PatientControllerDocs{
-	
-	@Autowired
-	private PatientServiceImpl service;
+	private final PatientServiceImpl service;
 	
 	@GetMapping(
 		produces = {MediaType.APPLICATION_JSON_VALUE}

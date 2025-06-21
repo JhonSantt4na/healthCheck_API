@@ -11,6 +11,7 @@ import com.santt4na.health_check.repository.DoctorRepository;
 import com.santt4na.health_check.repository.ScheduleRepository;
 import com.santt4na.health_check.service.ScheduleService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +19,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService {
 	
 	private final ScheduleRepository repository;
 	private final DoctorRepository doctorRepository;
 	private final ScheduleMapper mapper;
-	
-	public ScheduleServiceImpl(ScheduleRepository repository, DoctorRepository doctorRepository, ScheduleMapper mapper) {
-		this.repository = repository;
-		this.doctorRepository = doctorRepository;
-		this.mapper = mapper;
-	}
-	
+
 	@Transactional
 	public ScheduleResponseDTO createSchedule(ScheduleRequestDTO dto) {
 		Doctor doctor = doctorRepository.findById(dto.doctorId())

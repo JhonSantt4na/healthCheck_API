@@ -18,15 +18,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/appointments")
+@RequiredArgsConstructor
 public class AppointmentController {
 	
 	private final AppointmentService appointmentService;
 	private final ScheduleService scheduleService;
-	
-	public AppointmentController(AppointmentService appointmentService, ScheduleService scheduleService) {
-		this.appointmentService = appointmentService;
-		this.scheduleService = scheduleService;
-	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AppointmentResponseDTO> createAppointment(

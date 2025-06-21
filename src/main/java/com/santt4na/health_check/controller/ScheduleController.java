@@ -6,6 +6,7 @@ import com.santt4na.health_check.dto.scheduleDTO.ScheduleResponseDTO;
 import com.santt4na.health_check.dto.scheduleDTO.ScheduleUpdateDTO;
 import com.santt4na.health_check.service.ScheduleService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,10 +17,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/schedules")
+@RequiredArgsConstructor
 public class ScheduleController implements ScheduleControllerDocs {
 	
-	@Autowired
-	private ScheduleService service;
+	private final ScheduleService service;
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ScheduleResponseDTO>> findAll() {

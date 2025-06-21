@@ -14,9 +14,13 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Setter
+@Getter
 @Entity
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Appointment implements Serializable {
 	
 	@Serial
@@ -63,115 +67,5 @@ public class Appointment implements Serializable {
 	private LocalDateTime updatedAt;
 	
 	private LocalDateTime confirmedAt;
-	
-	public Appointment() {
-	}
-	
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public LocalDateTime getAppointmentDate() {
-		return appointmentDate;
-	}
-	
-	public void setAppointmentDate(LocalDateTime appointmentDate) {
-		this.appointmentDate = appointmentDate;
-	}
-	
-	public Patient getPatient() {
-		return patient;
-	}
-	
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
-	
-	public Doctor getDoctor() {
-		return doctor;
-	}
-	
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
-	}
-	
-	public Schedule getSchedule() {
-		return schedule;
-	}
-	
-	public void setSchedule(Schedule schedule) {
-		this.schedule = schedule;
-	}
-	
-	public AppointmentStatus getStatus() {
-		return status;
-	}
-	
-	public void setStatus(AppointmentStatus status) {
-		this.status = status;
-	}
-	
-	public CancelledBy getCancelledBy() {
-		return cancelledBy;
-	}
-	
-	public void setCancelledBy(CancelledBy cancelledBy) {
-		this.cancelledBy = cancelledBy;
-	}
-	
-	public String getReason() {
-		return reason;
-	}
-	
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
-	
-	public Integer getDuration() {
-		return duration;
-	}
-	
-	public void setDuration(Integer duration) {
-		this.duration = duration;
-	}
-	
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-	
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-	
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-	
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-	
-	public LocalDateTime getConfirmedAt() {
-		return confirmedAt;
-	}
-	
-	public void setConfirmedAt(LocalDateTime confirmedAt) {
-		this.confirmedAt = confirmedAt;
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass()) return false;
-		Appointment that = (Appointment) o;
-		return Objects.equals(id, that.id) && Objects.equals(appointmentDate, that.appointmentDate) && Objects.equals(patient, that.patient) && Objects.equals(doctor, that.doctor) && Objects.equals(schedule, that.schedule) && status == that.status && cancelledBy == that.cancelledBy && Objects.equals(reason, that.reason) && Objects.equals(duration, that.duration) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(confirmedAt, that.confirmedAt);
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, appointmentDate, patient, doctor, schedule, status, cancelledBy, reason, duration, createdAt, updatedAt, confirmedAt);
-	}
+
 }

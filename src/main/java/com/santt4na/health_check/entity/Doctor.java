@@ -22,6 +22,10 @@ import java.util.Objects;
 @Entity
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@EqualsAndHashCode
 public class Doctor implements Serializable {
 	
 	@Serial
@@ -73,115 +77,5 @@ public class Doctor implements Serializable {
 	
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
-	
-	public Doctor() {
-	}
-	
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getFullName() {
-		return fullName;
-	}
-	
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
-	
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public Gender getGender() {
-		return gender;
-	}
-	
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-	
-	public String getPhone() {
-		return phone;
-	}
-	
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	
-	public Specialty getSpecialty() {
-		return specialty;
-	}
-	
-	public void setSpecialty(Specialty specialty) {
-		this.specialty = specialty;
-	}
-	
-	public String getMedicalLicense() {
-		return medicalLicense;
-	}
-	
-	public void setMedicalLicense(String medicalLicense) {
-		this.medicalLicense = medicalLicense;
-	}
-	
-	public List<Schedule> getAvailableSchedules() {
-		return availableSchedules;
-	}
-	
-	public void setAvailableSchedules(List<Schedule> availableSchedules) {
-		this.availableSchedules = availableSchedules;
-	}
-	
-	public List<Appointment> getAppointments() {
-		return appointments;
-	}
-	
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
-	}
-	
-	public User getUser() {
-		return user;
-	}
-	
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-	
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-	
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-	
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass()) return false;
-		Doctor doctor = (Doctor) o;
-		return Objects.equals(id, doctor.id) && Objects.equals(fullName, doctor.fullName) && Objects.equals(email, doctor.email) && gender == doctor.gender && Objects.equals(phone, doctor.phone) && specialty == doctor.specialty && Objects.equals(medicalLicense, doctor.medicalLicense) && Objects.equals(availableSchedules, doctor.availableSchedules) && Objects.equals(appointments, doctor.appointments) && Objects.equals(user, doctor.user) && Objects.equals(createdAt, doctor.createdAt) && Objects.equals(updatedAt, doctor.updatedAt);
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, fullName, email, gender, phone, specialty, medicalLicense, availableSchedules, appointments, user, createdAt, updatedAt);
-	}
+
 }
