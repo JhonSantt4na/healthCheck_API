@@ -21,6 +21,7 @@ import com.santt4na.health_check.repository.PatientRepository;
 import com.santt4na.health_check.repository.ScheduleRepository;
 import com.santt4na.health_check.service.AppointmentService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,28 +32,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AppointmentServiceImpl implements AppointmentService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Startup.class);
 	private static final Logger auditLogger = LoggerFactory.getLogger("audit");
 	
-	@Autowired
-	private AppointmentMapper appointmentMapper;
+	private final AppointmentMapper appointmentMapper;
 	
-	@Autowired
-	private ScheduleMapper scheduleMapper;
+	private final ScheduleMapper scheduleMapper;
 	
-	@Autowired
-	private AppointmentRepository appointmentRepository;
+	private final AppointmentRepository appointmentRepository;
 	
-	@Autowired
-	private ScheduleRepository scheduleRepository;
+	private final ScheduleRepository scheduleRepository;
 	
-	@Autowired
-	private DoctorRepository doctorRepository;
+	private final DoctorRepository doctorRepository;
 	
-	@Autowired
-	private PatientRepository patientRepository;
+	private final PatientRepository patientRepository;
 	
 	@Override
 	@Transactional
