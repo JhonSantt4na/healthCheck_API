@@ -1,11 +1,5 @@
 package com.santt4na.health_check.entity;
 
-/*
-import com.santt4na.health_check.entity.security.User;
-import org.hibernate.proxy.HibernateProxy;
-import java.util.Objects;
-*/
-
 import com.santt4na.health_check.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,6 +18,10 @@ import java.util.Objects;
 @Entity
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@EqualsAndHashCode
 public class Patient implements Serializable {
 	
 	@Serial
@@ -58,12 +56,6 @@ public class Patient implements Serializable {
 	@Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}", message = "Invalid CPF format")
 	private String cpf;
 	
-	/*
-	@OneToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
-	private User user;
-	*/
-	
 	@Size(max = 50, message = "Health insurance must not exceed 50 characters")
 	private String healthInsurance;
 	
@@ -76,107 +68,4 @@ public class Patient implements Serializable {
 	
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
-	
-	public Patient() {
-	}
-	
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
-	
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public String getFullName() {
-		return fullName;
-	}
-	
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-	
-	public Gender getGender() {
-		return gender;
-	}
-	
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-	
-	public String getPhone() {
-		return phone;
-	}
-	
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	
-	public LocalDate getDateOfBirth() {
-		return dateOfBirth;
-	}
-	
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-	
-	public String getCpf() {
-		return cpf;
-	}
-	
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-	
-	public String getHealthInsurance() {
-		return healthInsurance;
-	}
-	
-	public void setHealthInsurance(String healthInsurance) {
-		this.healthInsurance = healthInsurance;
-	}
-	
-	public List<Appointment> getAppointments() {
-		return appointments;
-	}
-	
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
-	}
-	
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-	
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-	
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-	
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass()) return false;
-		Patient patient = (Patient) o;
-		return Objects.equals(id, patient.id) && Objects.equals(email, patient.email) && Objects.equals(fullName, patient.fullName) && gender == patient.gender && Objects.equals(phone, patient.phone) && Objects.equals(dateOfBirth, patient.dateOfBirth) && Objects.equals(cpf, patient.cpf) && Objects.equals(healthInsurance, patient.healthInsurance) && Objects.equals(appointments, patient.appointments) && Objects.equals(createdAt, patient.createdAt) && Objects.equals(updatedAt, patient.updatedAt);
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, email, fullName, gender, phone, dateOfBirth, cpf, healthInsurance, appointments, createdAt, updatedAt);
-	}
 }

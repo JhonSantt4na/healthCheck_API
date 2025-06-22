@@ -9,6 +9,7 @@ import com.santt4na.health_check.mapper.DoctorMapper;
 import com.santt4na.health_check.repository.DoctorRepository;
 import com.santt4na.health_check.service.DoctorService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Startup.class);
 	private static final Logger auditLogger = LoggerFactory.getLogger("audit");
 	
-	@Autowired
-	private DoctorMapper mapper;
+	private final DoctorMapper mapper;
 	
-	@Autowired
-	private DoctorRepository repository;
+	private final DoctorRepository repository;
 	
 	@Transactional
 	@Override

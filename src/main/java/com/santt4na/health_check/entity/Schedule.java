@@ -1,6 +1,10 @@
 package com.santt4na.health_check.entity;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,6 +15,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "schedules")
+@NoArgsConstructor
+@Setter
+@Getter
+@EqualsAndHashCode
 public class Schedule implements Serializable {
 	
 	@Serial
@@ -42,65 +50,5 @@ public class Schedule implements Serializable {
 		if (!endTime.isAfter(startTime)) {
 			throw new IllegalStateException("End time must be after start time");
 		}
-	}
-	
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public Doctor getDoctor() {
-		return doctor;
-	}
-	
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
-	}
-	
-	public List<Appointment> getAppointments() {
-		return appointments;
-	}
-	
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
-	}
-	
-	public LocalDateTime getStartTime() {
-		return startTime;
-	}
-	
-	public void setStartTime(LocalDateTime startTime) {
-		this.startTime = startTime;
-	}
-	
-	public LocalDateTime getEndTime() {
-		return endTime;
-	}
-	
-	public void setEndTime(LocalDateTime endTime) {
-		this.endTime = endTime;
-	}
-	
-	public Boolean getAvailable() {
-		return available;
-	}
-	
-	public void setAvailable(Boolean available) {
-		this.available = available;
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass()) return false;
-		Schedule schedule = (Schedule) o;
-		return Objects.equals(id, schedule.id) && Objects.equals(doctor, schedule.doctor) && Objects.equals(appointments, schedule.appointments) && Objects.equals(startTime, schedule.startTime) && Objects.equals(endTime, schedule.endTime) && Objects.equals(available, schedule.available);
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, doctor, appointments, startTime, endTime, available);
 	}
 }

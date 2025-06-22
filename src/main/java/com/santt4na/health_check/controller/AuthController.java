@@ -7,6 +7,7 @@ import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
 import com.santt4na.health_check.dto.securityDTO.TokenDTO;
 import com.santt4na.health_check.service.security.AuthService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController implements AuthControllerDocs {
-	
-	@Autowired
-	private AuthService service;
+
+	private final AuthService service;
 	
 	@GetMapping("/login")
 	public String showLoginPage() {

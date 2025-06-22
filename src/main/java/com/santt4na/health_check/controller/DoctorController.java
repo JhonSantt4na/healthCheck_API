@@ -5,6 +5,7 @@ import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorResponseDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorUpdateDTO;
 import com.santt4na.health_check.service.impl.DoctorServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/doctor")
+@RequiredArgsConstructor
 public class DoctorController implements DoctorControllerDocs{
 	
-	@Autowired
-	private DoctorServiceImpl service;
+	private final DoctorServiceImpl service;
 	
 	@GetMapping(
 		produces = {MediaType.APPLICATION_JSON_VALUE}
