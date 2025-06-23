@@ -1,7 +1,6 @@
 package com.santt4na.health_check.dto.patientDTO;
 
 import com.santt4na.health_check.enums.Gender;
-
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 

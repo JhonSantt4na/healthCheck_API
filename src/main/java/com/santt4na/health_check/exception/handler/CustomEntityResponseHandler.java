@@ -68,5 +68,4 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
 			request.getDescription(false));
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
-	
 }

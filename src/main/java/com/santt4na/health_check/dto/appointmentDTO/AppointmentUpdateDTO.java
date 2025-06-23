@@ -1,7 +1,6 @@
 package com.santt4na.health_check.dto.appointmentDTO;
 
 import com.santt4na.health_check.enums.AppointmentStatus;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,5 +27,4 @@ public record AppointmentUpdateDTO(
 	@NotNull(message = "Status is required")
 	AppointmentStatus status
 	
-) {
-}
+) { }

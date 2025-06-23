@@ -4,7 +4,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-
 public record ScheduleRequestDTO(
 	@NotNull(message = "Doctor ID is required")
 	Long doctorId,
@@ -22,7 +21,6 @@ public record ScheduleRequestDTO(
 		Objects.requireNonNull(startTime, "Start time cannot be null");
 		Objects.requireNonNull(endTime, "End time cannot be null");
 		
-		// Validação adicional de horários
 		if (endTime.isBefore(startTime)) {
 			throw new IllegalArgumentException("End time must be after start time");
 		}

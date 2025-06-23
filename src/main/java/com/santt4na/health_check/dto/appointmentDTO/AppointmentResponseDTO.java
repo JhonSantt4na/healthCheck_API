@@ -2,8 +2,6 @@ package com.santt4na.health_check.dto.appointmentDTO;
 
 import com.santt4na.health_check.enums.AppointmentStatus;
 import com.santt4na.health_check.enums.CancelledBy;
-
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public record AppointmentResponseDTO(

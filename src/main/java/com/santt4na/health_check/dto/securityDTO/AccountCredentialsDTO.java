@@ -4,7 +4,6 @@ import com.santt4na.health_check.entity.security.Permission;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.validation.constraints.Email;
 import java.io.Serial;
 import java.io.Serializable;

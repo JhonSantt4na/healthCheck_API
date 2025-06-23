@@ -24,7 +24,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -39,15 +38,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private static final Logger auditLogger = LoggerFactory.getLogger("audit");
 	
 	private final AppointmentMapper appointmentMapper;
-	
 	private final ScheduleMapper scheduleMapper;
-	
 	private final AppointmentRepository appointmentRepository;
-	
 	private final ScheduleRepository scheduleRepository;
-	
 	private final DoctorRepository doctorRepository;
-	
 	private final PatientRepository patientRepository;
 	
 	@Override

@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
+import org.hibernate.proxy.HibernateProxy;
 import javax.validation.constraints.*;
 import java.io.Serial;
 import java.io.Serializable;
@@ -22,11 +22,10 @@ import java.util.Objects;
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode
 public class Patient implements Serializable {
 	
 	@Serial
-	private static final long serialVersionUID = 1l;
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,4 +72,20 @@ public class Patient implements Serializable {
 	
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
+	
+	@Override
+	public final boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null) return false;
+		Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+		Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+		if (thisEffectiveClass != oEffectiveClass) return false;
+		Patient patient = (Patient) o;
+		return getId() != null && Objects.equals(getId(), patient.getId());
+	}
+	
+	@Override
+	public final int hashCode() {
+		return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+	}
 }

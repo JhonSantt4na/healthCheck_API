@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="content">
-    <!-- Conteúdo Central -->
     <h1 class="mt-5">Minhas Consultas</h1>
     <p>Aqui está a lista das suas consultas agendadas.</p>
-    <!-- Exemplo de conteúdo dinâmico -->
     <ul class="consulta-lista">
         <li th:each="consulta : ${consultas}" th:text="${consulta.descricao}">Consulta</li>
     </ul>

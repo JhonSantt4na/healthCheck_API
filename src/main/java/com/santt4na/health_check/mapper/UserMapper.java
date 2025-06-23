@@ -1,12 +1,9 @@
 package com.santt4na.health_check.mapper;
 
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
-import com.santt4na.health_check.entity.security.Permission;
 import com.santt4na.health_check.entity.security.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {

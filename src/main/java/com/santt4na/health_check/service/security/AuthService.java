@@ -19,6 +19,7 @@ import com.santt4na.health_check.repository.UserRepository;
 import com.santt4na.health_check.security.jwt.JwtTokenProvider;
 import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class AuthService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Startup.class);
@@ -51,19 +53,6 @@ public class AuthService {
 	private final PatientMapper patientMapper;
 	private final PatientRepository patientRepository;
 	private final PasswordEncoder passwordEncoder;
-	
-	public AuthService(AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider, UserRepository userRepository, DoctorRepository doctorRepository, PermissionsRepository repositoryPermission, UserMapper userMapper, DoctorMapper doctorMapper, PatientMapper patientMapper, PatientRepository patientRepository, PasswordEncoder passwordEncoder) {
-		this.authenticationManager = authenticationManager;
-		this.tokenProvider = tokenProvider;
-		this.userRepository = userRepository;
-		this.doctorRepository = doctorRepository;
-		this.repositoryPermission = repositoryPermission;
-		this.userMapper = userMapper;
-		this.doctorMapper = doctorMapper;
-		this.patientMapper = patientMapper;
-		this.patientRepository = patientRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
 	
 	public ResponseEntity<TokenDTO> signIn(AccountCredentialsDTO credentials) {
 		authenticationManager.authenticate(

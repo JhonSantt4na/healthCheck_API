@@ -397,7 +397,6 @@
             <p>Sua saúde em primeiro lugar</p>
         </div>
 
-        <!-- Mensagem de erro -->
         <div class="error-message" th:if="${param.error}">
             <i class="fas fa-exclamation-circle"></i>
             <span>Credenciais inválidas. Por favor, tente novamente.</span>
@@ -456,7 +455,7 @@
 
 <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
 <script>
-    // Toggle password visibility
+
     document.getElementById('togglePassword').addEventListener('click', function() {
         const passwordInput = document.getElementById('password');
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -467,7 +466,6 @@
         this.classList.toggle('fa-eye-slash');
     });
 
-    // Form validation
     document.querySelector('form').addEventListener('submit', function(e) {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
@@ -478,7 +476,6 @@
         }
     });
 
-    // Add animation on load
     document.addEventListener('DOMContentLoaded', function() {
         const loginContainer = document.querySelector('.login-container');
         loginContainer.style.opacity = '0';

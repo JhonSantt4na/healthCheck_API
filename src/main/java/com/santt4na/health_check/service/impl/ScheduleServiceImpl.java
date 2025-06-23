@@ -14,7 +14,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -102,5 +101,4 @@ public class ScheduleServiceImpl implements ScheduleService {
 			.map(mapper::responseDto)
 			.collect(Collectors.toList());
 	}
-	
 }

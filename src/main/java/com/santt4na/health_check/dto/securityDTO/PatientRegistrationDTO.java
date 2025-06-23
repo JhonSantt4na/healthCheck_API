@@ -13,7 +13,5 @@ import lombok.Setter;
 public class PatientRegistrationDTO {
 	
 	private AccountCredentialsDTO user;
-	
 	private PatientRequestDTO patient;
-	
 }

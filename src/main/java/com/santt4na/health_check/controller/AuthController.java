@@ -1,15 +1,9 @@
 package com.santt4na.health_check.controller;
 
 import com.santt4na.health_check.controller.docs.AuthControllerDocs;
-import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
-import com.santt4na.health_check.dto.doctorDTO.DoctorResponseDTO;
-import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
-import com.santt4na.health_check.dto.patientDTO.PatientResponseDTO;
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
 import com.santt4na.health_check.dto.securityDTO.DoctorRegistrationDTO;
 import com.santt4na.health_check.dto.securityDTO.PatientRegistrationDTO;
-import com.santt4na.health_check.dto.securityDTO.TokenDTO;
-import com.santt4na.health_check.exception.RequiredObjectIsNullException;
 import com.santt4na.health_check.service.security.AuthService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -20,10 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.Serializable;
 import java.util.Map;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/auth")
@@ -39,7 +30,8 @@ public class AuthController implements AuthControllerDocs {
 	
 	@PostMapping("/signin")
 	@Override
-	public ResponseEntity<?> signin(@RequestBody AccountCredentialsDTO credentials) {
+	public ResponseEntity<?> signin( @Valid @RequestBody AccountCredentialsDTO credentials) {
+		
 		if (credentialsIsInvalid(credentials))return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
 		var token = service.signIn(credentials);
 		
@@ -50,6 +42,7 @@ public class AuthController implements AuthControllerDocs {
 	@PutMapping("/refresh/{username}")
 	@Override
 	public ResponseEntity<?> refreshToken(@PathVariable("username") String username, @RequestHeader("Authorization") String refreshToken) {
+		
 		if (parametersAreInvalid(username, refreshToken)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
 		var token = service.refreshToken(username, refreshToken);
 		if (token == null) ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
@@ -61,6 +54,7 @@ public class AuthController implements AuthControllerDocs {
 	}
 	
 	private static boolean credentialsIsInvalid(AccountCredentialsDTO credentials) {
+		
 		return credentials == null ||
 			StringUtils.isBlank(credentials.getPassword()) ||
 			StringUtils.isBlank(credentials.getUserName());

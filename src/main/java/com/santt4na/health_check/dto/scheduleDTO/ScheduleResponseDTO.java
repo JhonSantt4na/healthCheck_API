@@ -1,10 +1,10 @@
 package com.santt4na.health_check.dto.scheduleDTO;
 
 import com.santt4na.health_check.entity.Schedule;
-
 import java.time.LocalDateTime;
 
 public record ScheduleResponseDTO(
+	
 	Long id,
 	Long doctorId,
 	String doctorName,

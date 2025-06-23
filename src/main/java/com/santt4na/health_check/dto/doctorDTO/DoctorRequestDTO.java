@@ -2,7 +2,6 @@ package com.santt4na.health_check.dto.doctorDTO;
 
 import com.santt4na.health_check.enums.Gender;
 import com.santt4na.health_check.enums.Specialty;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

@@ -1,31 +1,32 @@
 package com.santt4na.health_check.controller;
 
 import com.santt4na.health_check.controller.docs.DoctorControllerDocs;
-import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorResponseDTO;
 import com.santt4na.health_check.dto.doctorDTO.DoctorUpdateDTO;
 import com.santt4na.health_check.service.impl.DoctorServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/doctor")
-@RequiredArgsConstructor
 public class DoctorController implements DoctorControllerDocs{
 	
 	private final DoctorServiceImpl service;
+	
+	public DoctorController(DoctorServiceImpl service) {
+		this.service = service;
+	}
 	
 	@GetMapping(
 		produces = {MediaType.APPLICATION_JSON_VALUE}
 	)
 	@Override
 	public ResponseEntity<List<DoctorResponseDTO>> findAll() {;
+		
 		return ResponseEntity.ok(service.listAllDoctors());
 	}
 	
@@ -34,6 +35,7 @@ public class DoctorController implements DoctorControllerDocs{
 	)
 	@Override
 	public ResponseEntity<DoctorResponseDTO> findById(@PathVariable Long id) {
+		
 		DoctorResponseDTO found = service.getDoctorById(id);
 		return ResponseEntity.ok(found);
 	}
@@ -44,7 +46,8 @@ public class DoctorController implements DoctorControllerDocs{
 		consumes = {MediaType.APPLICATION_JSON_VALUE}
 	)
 	@Override
-	public ResponseEntity<DoctorResponseDTO> update(@PathVariable Long id, @RequestBody DoctorUpdateDTO doctor) {
+	public ResponseEntity<DoctorResponseDTO> update(@PathVariable Long id, @Valid @RequestBody DoctorUpdateDTO doctor) {
+		
 		DoctorResponseDTO updated = service.updateDoctor(id, doctor);
 		return ResponseEntity.ok(updated);
 	}
@@ -52,6 +55,7 @@ public class DoctorController implements DoctorControllerDocs{
 	@DeleteMapping(value = "/{id}")
 	@Override
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		
 		service.deleteDoctor(id);
 		return ResponseEntity.noContent().build();
 	}

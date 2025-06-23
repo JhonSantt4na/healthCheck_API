@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.proxy.HibernateProxy;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @ToString
@@ -24,7 +26,6 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode
 public class Doctor implements Serializable {
 	
 	@Serial
@@ -61,6 +62,7 @@ public class Doctor implements Serializable {
 	private String medicalLicense; // CRM
 	
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ToString.Exclude
 	private List<Schedule> availableSchedules = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -76,5 +78,20 @@ public class Doctor implements Serializable {
 	
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
-
+	
+	@Override
+	public final boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null) return false;
+		Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+		Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+		if (thisEffectiveClass != oEffectiveClass) return false;
+		Doctor doctor = (Doctor) o;
+		return getId() != null && Objects.equals(getId(), doctor.getId());
+	}
+	
+	@Override
+	public final int hashCode() {
+		return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+	}
 }

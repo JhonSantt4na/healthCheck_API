@@ -14,4 +14,5 @@ public record PatientRequestDTO(
 	@Past @NotNull LocalDate dateOfBirth,
 	@Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}") @NotNull String cpf,
 	@Size(max = 50) String healthInsurance
+	
 ) {}

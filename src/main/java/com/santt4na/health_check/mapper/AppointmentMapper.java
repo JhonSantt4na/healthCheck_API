@@ -35,12 +35,8 @@ public interface AppointmentMapper {
 	@Mapping(source = "scheduleId", target = "schedule.id")
 	void updateToEntity(AppointmentUpdateDTO dto, @MappingTarget Appointment appointment);
 	
-	
 	@Mapping(source = "patient.id", target = "patientId")
 	@Mapping(source = "doctor.id", target = "doctorId")
 	@Mapping(source = "schedule.id", target = "scheduleId")
 	AppointmentResponseDTO responseToDto(Appointment appointment);
-	
-	List<AppointmentResponseDTO> responseListToDto(List<Appointment> appointments);
-
 }
