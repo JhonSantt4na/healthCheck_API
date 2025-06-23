@@ -33,8 +33,11 @@ security:
   enabled: true
   jwt:
     token:
-      secret-key: 53cr37
+      secret-key: my-very-secure-secret-key-with-at-least-32-chars
       expire-lenght: 3600000
+      issuer: health-check-system
+      access-expire-length: 3600000 # 1h
+      refresh-expire-length: 2592000000 # 30d
 
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000

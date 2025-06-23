@@ -55,37 +55,30 @@ public class securityConfig {
 		return http
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
+			.formLogin(AbstractHttpConfigurer::disable)
+			.logout(AbstractHttpConfigurer::disable)
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers(
 					"/auth/signin",
 					"/auth/refresh/**",
-					"/auth/createUser",
+					"/auth/register/doctor",
+					"/auth/register/patient",
 					"/swagger-ui/**",
 					"/v3/api-docs/**"
 				).permitAll()
 				
-				.requestMatchers("/api/doctor", "/api/doctor/{id}").hasAnyRole("PATIENT", "DOCTOR")
-				
+				.requestMatchers("/api/doctor", "/api/doctor/{id}").hasRole("DOCTOR")
 				.requestMatchers("/api/schedules/**").hasRole("DOCTOR")
-				
 				.requestMatchers("/api/appointments/patient/**").hasRole("PATIENT")
 				.requestMatchers("/api/appointments").hasRole("PATIENT")
-				
 				.requestMatchers("/api/appointments/doctor/**").hasRole("DOCTOR")
 				.requestMatchers("/api/appointments/*/confirm").hasRole("DOCTOR")
 				.requestMatchers("/api/appointments/*/cancel/doctor").hasRole("DOCTOR")
-				
 				.requestMatchers("/api/appointments/*/cancel/patient").hasRole("PATIENT")
 				
 				.anyRequest().authenticated()
 			)
-			.formLogin(form -> form
-				.loginPage("/auth/login")
-				.defaultSuccessUrl("/", true)
-				.permitAll()
-			)
-			.logout(logout -> logout.permitAll())
 			.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
 			.cors(Customizer.withDefaults())
 			.build();

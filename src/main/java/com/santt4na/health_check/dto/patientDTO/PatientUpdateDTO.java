@@ -7,12 +7,12 @@ import java.time.LocalDate;
 
 public record PatientUpdateDTO(
 	
-	@Size(min = 2, max = 100) @NotNull String fullName,
-	@Email @NotNull String email,
-	@NotNull Gender gender,
-	@Pattern(regexp = "\\+?\\d{2}\\s?\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}") @NotNull String phone,
-	@Past @NotNull LocalDate dateOfBirth,
-	@Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}") @NotNull String cpf,
+	@Size(min = 2, max = 100) String fullName,
+	@Email  String email,
+	Gender gender,
+	@Pattern(regexp = "\\+?\\d{2}\\s?\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}") String phone,
+	@Past LocalDate dateOfBirth,
+	@Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}") String cpf,
 	@Size(max = 50) String healthInsurance
 ) {}
 

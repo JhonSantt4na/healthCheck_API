@@ -2,25 +2,34 @@ package com.santt4na.health_check.controller;
 
 import com.santt4na.health_check.controller.docs.AuthControllerDocs;
 import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
+import com.santt4na.health_check.dto.doctorDTO.DoctorResponseDTO;
 import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
+import com.santt4na.health_check.dto.patientDTO.PatientResponseDTO;
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
+import com.santt4na.health_check.dto.securityDTO.DoctorRegistrationDTO;
+import com.santt4na.health_check.dto.securityDTO.PatientRegistrationDTO;
 import com.santt4na.health_check.dto.securityDTO.TokenDTO;
+import com.santt4na.health_check.exception.RequiredObjectIsNullException;
 import com.santt4na.health_check.service.security.AuthService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
+import java.util.Map;
+import java.util.Objects;
+
 @Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController implements AuthControllerDocs {
-
+	
 	private final AuthService service;
 	
 	@GetMapping("/login")
@@ -40,29 +49,11 @@ public class AuthController implements AuthControllerDocs {
 	
 	@PutMapping("/refresh/{username}")
 	@Override
-	public ResponseEntity<?> refreshToken(
-		@PathVariable("username") String username,
-		@RequestHeader("Authorization") String refreshToken) {
+	public ResponseEntity<?> refreshToken(@PathVariable("username") String username, @RequestHeader("Authorization") String refreshToken) {
 		if (parametersAreInvalid(username, refreshToken)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
 		var token = service.refreshToken(username, refreshToken);
 		if (token == null) ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
 		return  ResponseEntity.ok().body(token);
-	}
-	
-	@PostMapping(value = "/registerDoctor",
-		consumes = MediaType.APPLICATION_JSON_VALUE,
-		produces = MediaType.APPLICATION_JSON_VALUE)
-	@Override
-	public ResponseEntity<TokenDTO> registerDoctor(@Valid @RequestBody AccountCredentialsDTO user, DoctorRequestDTO doctor) {
-		return service.registerDoctor(user, doctor);
-	}
-	
-	@PostMapping(value = "/registerPatient",
-		consumes = MediaType.APPLICATION_JSON_VALUE,
-		produces = MediaType.APPLICATION_JSON_VALUE)
-	@Override
-	public AccountCredentialsDTO registerPatient(AccountCredentialsDTO credentials, PatientRequestDTO patient) {
-		return service.registerPatient(credentials, patient);
 	}
 	
 	private boolean parametersAreInvalid(String username, String refreshToken) {
@@ -74,4 +65,37 @@ public class AuthController implements AuthControllerDocs {
 			StringUtils.isBlank(credentials.getPassword()) ||
 			StringUtils.isBlank(credentials.getUserName());
 	}
+	
+	@PostMapping(value = "/register/patient",
+		consumes = MediaType.APPLICATION_JSON_VALUE,
+		produces = MediaType.APPLICATION_JSON_VALUE)
+	@Override
+	public ResponseEntity<?> registerPatient(@Valid @RequestBody PatientRegistrationDTO registrationDTO) {
+		try {
+			Map<String, Object>  response = service.registerPatient(registrationDTO.getUser(), registrationDTO.getPatient());
+			return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body("System configuration error: " + e.getMessage());
+		}
+	}
+	
+	@PostMapping(value = "/register/doctor",
+		consumes = MediaType.APPLICATION_JSON_VALUE,
+		produces = MediaType.APPLICATION_JSON_VALUE)
+	@Override
+	public ResponseEntity<?> registerDoctor(@Valid @RequestBody DoctorRegistrationDTO registrationDTO) {
+		try {
+			Map<String, Object>  response = service.registerDoctor(registrationDTO.getUser(), registrationDTO.getDoctor());
+			return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body("System configuration error: " + e.getMessage());
+		}
+	}
+	
 }

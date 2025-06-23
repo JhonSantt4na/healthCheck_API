@@ -1,5 +1,6 @@
 package com.santt4na.health_check.entity;
 
+import com.santt4na.health_check.entity.security.User;
 import com.santt4na.health_check.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -62,6 +63,10 @@ public class Patient implements Serializable {
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
 	@ToString.Exclude
 	private List<Appointment> appointments = new ArrayList<>();
+	
+	@OneToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
+	private User user;
 	
 	@CreationTimestamp
 	private LocalDateTime createdAt;

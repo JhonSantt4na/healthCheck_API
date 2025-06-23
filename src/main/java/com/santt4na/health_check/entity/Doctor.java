@@ -17,7 +17,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @ToString
@@ -68,8 +67,8 @@ public class Doctor implements Serializable {
 	@ToString.Exclude
 	private List<Appointment> appointments = new ArrayList<>();
 	
-	@OneToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
 	private User user;
 	
 	@CreationTimestamp
