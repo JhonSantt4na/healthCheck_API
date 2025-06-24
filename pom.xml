@@ -24,9 +24,17 @@
 		<mysql.version>9.1.0</mysql.version>
 		<springdoc.version>2.8.6</springdoc.version>
 		<jwt.version>4.5.0</jwt.version>
+		<actuador.version>3.5.3</actuador.version>
 	</properties>
 
 	<dependencies>
+
+		<!-- Actuador -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+			<version>${actuador.version}</version>
+		</dependency>
 
 		<!-- Bean Validation -->
 		<dependency>

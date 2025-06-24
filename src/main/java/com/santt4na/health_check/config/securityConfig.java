@@ -65,7 +65,9 @@ public class securityConfig {
 					"/auth/register/doctor",
 					"/auth/register/patient",
 					"/swagger-ui/**",
-					"/v3/api-docs/**"
+					"/v3/api-docs/**",
+					"/actuator/health",
+					"/actuator/info"
 				).permitAll()
 				
 				.requestMatchers("/api/doctor", "/api/doctor/{id}").hasRole("DOCTOR")
@@ -76,6 +78,8 @@ public class securityConfig {
 				.requestMatchers("/api/appointments/*/confirm").hasRole("DOCTOR")
 				.requestMatchers("/api/appointments/*/cancel/doctor").hasRole("DOCTOR")
 				.requestMatchers("/api/appointments/*/cancel/patient").hasRole("PATIENT")
+				.requestMatchers("/actuator/**").hasRole("ADMIN")
+				.requestMatchers("/actuator/health", "/actuator/info").permitAll()
 				
 				.anyRequest().authenticated()
 			)

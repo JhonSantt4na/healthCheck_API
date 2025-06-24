@@ -55,6 +55,8 @@ public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 	
 	public ResponseEntity<TokenDTO> signIn(AccountCredentialsDTO credentials) {
+		
+		logger.info("Authentication requested for user [{}]", credentials.getUserName());
 		authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(
 				credentials.getUserName(),
@@ -71,10 +73,13 @@ public class AuthService {
 			credentials.getUserName(),
 			user.getRoles()
 		);
+		logger.info("User [{}] authenticated successfully", credentials.getUserName());
+		auditLogger.info("User [{}] logged in", credentials.getUserName());
 		return ResponseEntity.ok(token);
 	}
 	
 	public ResponseEntity<TokenDTO> refreshToken(String username, String refreshToken) {
+		logger.info("Refresh token requested for user [{}]", username);
 		var user = userRepository.findByUsername(username);
 		TokenDTO token;
 		if (user != null) {
@@ -82,11 +87,12 @@ public class AuthService {
 		} else {
 			throw new UsernameNotFoundException("Username " + username + " not found!");
 		}
+		logger.info("New access token generated for user [{}]", username);
+		auditLogger.info("Refresh token granted for user [{}]", username);
 		return ResponseEntity.ok(token);
 	}
 	
 	private String generateHashedPassword(String password) {
-		
 		PasswordEncoder pbkdf2Encoder = new Pbkdf2PasswordEncoder(
 			"", 8, 185000,
 			Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
@@ -102,6 +108,7 @@ public class AuthService {
 	@Transactional
 	public Map<String, Object> registerDoctor(AccountCredentialsDTO userDTO, DoctorRequestDTO doctorDTO){
 		
+		logger.info("Doctor registration requested for user [{}]", userDTO.getUserName());
 		if (userDTO == null || doctorDTO == null) {
 			throw new IllegalArgumentException("User and doctor data cannot be null");
 		}
@@ -156,12 +163,16 @@ public class AuthService {
 		response.put("doctor", doctorMapper.toResponseDto(savedDoctor));
 		response.put("token", tokenDto);
 		
+		logger.info("User [{}] registered successfully with DOCTOR role", userDTO.getUserName());
+		logger.info("Doctor profile [{}] created successfully", doctorDTO.medicalLicense());
+		auditLogger.info("New doctor [{}] registered by user [{}]", doctorDTO.medicalLicense(), userDTO.getUserName());
 		return response;
 	}
 	
 	@Transactional
 	public Map<String, Object> registerPatient(AccountCredentialsDTO userDTO, PatientRequestDTO patientDTO){
 		
+		logger.info("Patient registration requested for user [{}]", userDTO.getUserName());
 		if (userDTO == null || patientDTO == null) {
 			throw new IllegalArgumentException("User and patient data cannot be null");
 		}
@@ -210,6 +221,9 @@ public class AuthService {
 		response.put("patient", patientMapper.toResponseDto(savedPatient));
 		response.put("token", tokenDto);
 		
+		logger.info("User [{}] registered successfully with PATIENT role", userDTO.getUserName());
+		logger.info("Patient profile created successfully for user [{}]", userDTO.getUserName());
+		auditLogger.info("New patient registered by user [{}]", userDTO.getUserName());
 		return response;
 	}
 	

@@ -24,6 +24,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -47,7 +48,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	@Transactional
 	public AppointmentResponseDTO createAppointment(AppointmentRequestDTO dto) {
-		
+	
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		logger.info("Request to create a new appointment for patient [{}] with doctor [{}]", dto.patientId(), dto.doctorId());
 		if (dto.patientId() == null) {
 			throw new IllegalArgumentException("Patient ID is required");
 		}
@@ -68,10 +71,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 			.orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
 		
 		if (!dto.appointmentDate().isEqual(schedule.getStartTime()))  {
-			throw new BusinessException("A data do agendamento deve coincidir...");
+			auditLogger.error("The scheduling date must coincide ...");
+			throw new BusinessException("The scheduling date must coincide ......");
 		}
 		
 		if (doctor == null || patient == null) {
+			auditLogger.error("Required entities not found");
 			throw new ResourceNotFoundException("Required entities not found");
 		}
 		
@@ -86,12 +91,18 @@ public class AppointmentServiceImpl implements AppointmentService {
 		appointment.setDuration(dto.duration());
 		
 		Appointment saved = appointmentRepository.save(appointment);
+		
+		logger.info("Appointment [{}] successfully created", appointment.getId());
+		auditLogger.info("Appointment [{}] created by patient [{}]", appointment.getId(), currentUser);
 		return appointmentMapper.responseToDto(saved);
 	}
 	
 	@Override
 	@Transactional
 	public AppointmentResponseDTO updateAppointment(Long id, AppointmentUpdateDTO dto) {
+		
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		logger.info("Request to update appointment [{}]", id);
 		Appointment existing = appointmentRepository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
 		
@@ -109,12 +120,18 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 		
 		Appointment updated = appointmentRepository.save(existing);
+		
+		logger.info("Appointment [{}] successfully updated", id);
+		auditLogger.info("Appointment [{}] updated by user [{}]", id, currentUser);
 		return appointmentMapper.responseToDto(updated);
 	}
 	
 	@Override
 	@Transactional
 	public void cancelAppointment(Long id, String reason) {
+		
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		logger.info("Request to cancel appointment [{}] with reason [{}]", id, reason);
 		Appointment appointment = appointmentRepository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
 		
@@ -125,6 +142,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 		schedule.setAvailable(true);
 		scheduleRepository.save(schedule);
 		
+		logger.info("Appointment [{}] successfully canceled", id);
+		auditLogger.info("Appointment [{}] canceled by user [{}], reason: [{}]", id, currentUser, reason);
 		appointmentRepository.save(appointment);
 	}
 	
@@ -133,12 +152,14 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public AppointmentResponseDTO findByIdAppointment(Long id) {
 		Appointment appointment = appointmentRepository.findByIdWithDetails(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
+		logger.info("Request to retrieve appointment by ID [{}]", id);
 		return appointmentMapper.responseToDto(appointment);
 	}
 	
 	@Override
 	@Transactional
 	public List<AppointmentResponseDTO> findAllAppointment() {
+		logger.info("Request to retrieve all appointments");
 		return appointmentRepository.findAllWithDetails().stream()
 			.map(appointmentMapper::responseToDto)
 			.toList();
@@ -147,6 +168,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	@Transactional
 	public List<AppointmentResponseDTO> getDoctorAppointments(Long doctorId) {
+		
+		logger.info("Request to retrieve appointments for doctor [{}]", doctorId);
 		return appointmentRepository.findByDoctor_Id(doctorId).stream()
 			.map(appointmentMapper::responseToDto)
 			.collect(Collectors.toList());
@@ -155,6 +178,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	@Transactional
 	public List<AppointmentResponseDTO> getPatientAppointments(Long patientId) {
+		
+		logger.info("Request to retrieve appointments for patient [{}]", patientId);
 		return appointmentRepository.findByPatient_Id(patientId).stream()
 			.map(appointmentMapper::responseToDto)
 			.collect(Collectors.toList());
@@ -164,6 +189,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Transactional
 	public AppointmentResponseDTO confirmAppointment(Long id) {
 		
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		logger.info("Request to confirm appointment [{}]", id);
 		Appointment appointment = appointmentRepository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Appointment not found with ID: " + id));
 		
@@ -171,13 +198,17 @@ public class AppointmentServiceImpl implements AppointmentService {
 		appointment.setConfirmedAt(LocalDateTime.now());
 		Appointment confirmed = appointmentRepository.save(appointment);
 		
-		auditLogger.info("Appointment confirmed with ID {}", id);
+		logger.info("Appointment [{}] successfully confirmed", id);
+		auditLogger.info("Appointment [{}] confirmed by doctor [{}]", id, currentUser);
 		return appointmentMapper.responseToDto(confirmed);
 	}
 	
 	@Override
 	@Transactional
 	public AppointmentResponseDTO cancelAppointmentByDoctor(Long id, String reason) {
+		
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		logger.info("Doctor requested to cancel appointment [{}] with reason [{}]", id, reason);
 		Appointment appointment = appointmentRepository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Appointment not found with ID: " + id));
 		appointment.setStatus(AppointmentStatus.CANCELED);
@@ -189,7 +220,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		scheduleRepository.save(schedule);
 		
 		Appointment canceled = appointmentRepository.save(appointment);
-		auditLogger.info("Appointment canceled by doctor with ID {}", id);
+		
+		logger.info("Appointment [{}] successfully canceled by doctor", id);
+		auditLogger.info("Appointment [{}] canceled by doctor [{}], reason: [{}]", id, currentUser, reason);
 		return appointmentMapper.responseToDto(canceled);
 	}
 	
@@ -197,6 +230,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Transactional
 	public AppointmentResponseDTO cancelAppointmentByPatient(Long id, String reason) {
 		
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		logger.info("Patient requested to cancel appointment [{}] with reason [{}]", id, reason);
 		Appointment appointment = appointmentRepository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Appointment not found with ID: " + id));
 		
@@ -209,13 +244,17 @@ public class AppointmentServiceImpl implements AppointmentService {
 		scheduleRepository.save(schedule);
 		
 		Appointment canceled = appointmentRepository.save(appointment);
-		auditLogger.info("Appointment canceled by patient with ID {}", id);
+		
+		logger.info("Appointment [{}] successfully canceled by patient", id);
+		auditLogger.info("Appointment [{}] canceled by patient [{}], reason: [{}]", id, currentUser, reason);
 		return appointmentMapper.responseToDto(canceled);
 	}
 	
 	@Override
 	@Transactional
 	public List<ScheduleResponseDTO> getAvailableSchedules(Long doctorId) {
+		
+		logger.info("Request to retrieve available schedules for doctor [{}]", doctorId);
 		return scheduleRepository.findByDoctorIdAndAvailableTrue(doctorId).stream()
 			.map(scheduleMapper::responseDto)
 			.collect(Collectors.toList());

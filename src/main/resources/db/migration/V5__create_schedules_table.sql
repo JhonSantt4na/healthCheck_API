@@ -1,0 +1,7 @@
+CREATE TABLE schedules (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  doctor_id BIGINT NOT NULL,
+  start_time DATETIME NOT NULL,
+  end_time DATETIME NOT NULL,
+  available BOOLEAN NOT NULL DEFAULT TRUE
+);

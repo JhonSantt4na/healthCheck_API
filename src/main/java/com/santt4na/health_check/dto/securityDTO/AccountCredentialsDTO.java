@@ -18,17 +18,17 @@ public class AccountCredentialsDTO implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 	
-	@NotBlank
+	@NotBlank(message = "Username is required")
 	private String userName;
 	
-	@NotBlank
+	@NotBlank(message = "Full name is required")
 	private String fullName;
 	
-	@Email
-	@NotBlank
+	@Email(message = "Invalid email format")
+	@NotBlank(message = "Email is required")
 	private String email;
 	
-	@NotBlank
+	@NotBlank(message = "Password is required")
 	private String password;
 	
 	private List<Permission> permissions = new ArrayList<>();

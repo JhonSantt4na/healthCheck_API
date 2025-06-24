@@ -1,0 +1,14 @@
+CREATE TABLE appointment (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  appointment_date DATETIME NOT NULL,
+  patient_id BIGINT NOT NULL,
+  doctor_id BIGINT NOT NULL,
+  schedule_id BIGINT NOT NULL,
+  status VARCHAR(20) NOT NULL,
+  cancelled_by VARCHAR(20),
+  reason VARCHAR(255),
+  duration INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  confirmed_at DATETIME
+);

@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,8 +31,9 @@ public class DoctorServiceImpl implements DoctorService {
 	@Transactional
 	@Override
 	public DoctorResponseDTO updateDoctor(Long id, DoctorUpdateDTO dto) {
-		logger.info("Starting Updated one new User Doctor By Id");
-		auditLogger.info("Creating one new User!");
+		
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		logger.info("Request to update doctor [{}]", id);
 		
 		Doctor searchDoctor = repository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + id));
@@ -39,7 +41,8 @@ public class DoctorServiceImpl implements DoctorService {
 		mapper.updateEntityFromDto(dto, searchDoctor);
 		Doctor updated = repository.save(searchDoctor);
 		
-		auditLogger.info("Audit: Updated doctor ID {}", id);
+		logger.info("Doctor [{}] successfully updated", id);
+		auditLogger.info("Doctor [{}] updated by user [{}]", id, currentUser);
 		return mapper.toResponseDto(updated);
 	}
 	
@@ -47,7 +50,7 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public DoctorResponseDTO getDoctorById(Long id) {
 		
-		logger.info("Fetching doctor by ID: {}", id);
+		logger.info("Request to retrieve doctor by ID [{}]", id);
 		Doctor doctor = repository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Doctor not found with ID: " + id));
 		return mapper.toResponseDto(doctor);
@@ -56,9 +59,8 @@ public class DoctorServiceImpl implements DoctorService {
 	@Transactional
 	@Override
 	public List<DoctorResponseDTO> listAllDoctors() {
-		logger.info("List All Doctors");
-		auditLogger.info("Audit: List All Doctors");
 		
+		logger.info("Request to list all doctors");
 		List<Doctor> doctors = repository.findAll();
 		return doctors.stream()
 			.map(mapper::toResponseDto)
@@ -68,12 +70,14 @@ public class DoctorServiceImpl implements DoctorService {
 	@Transactional
 	@Override
 	public void deleteDoctor(Long id) {
-		logger.info("Deleting doctor with ID: {}", id);
+		
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		logger.info("Request to delete doctor [{}]", id);
 		Doctor doctor = repository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Doctor not found"));
 		
 		repository.delete(doctor);
-		auditLogger.info("Audit: Deleted doctor with ID {}", id);
+		logger.info("Doctor [{}] successfully deleted", id);
+		auditLogger.info("Doctor [{}] deleted by user [{}]", id, currentUser);
 	}
-	
 }

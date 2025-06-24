@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,23 +31,25 @@ public class PatientServiceImpl implements PatientService {
 	@Transactional
 	@Override
 	public PatientResponseDTO updatePatient(Long id, PatientUpdateDTO dto) {
-		logger.info("Starting Updated one new User Doctor By Id");
-		auditLogger.info("Find By Id User!");
 		
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		logger.info("Request to update patient [{}]", id);
 		Patient searchPatient = repository.findById(id)
 			.orElseThrow(()-> new ResourceNotFoundException("Patient not found with ID:" + id));
 		
 		mapper.updateEntityFromDto(dto, searchPatient);
 		Patient updated = repository.save(searchPatient);
 		
-		auditLogger.info("Audit: Updated Patient ID {}", id);
+		logger.info("Patient [{}] successfully updated", id);
+		auditLogger.info("Patient [{}] updated by user [{}]", id, currentUser);
 		return mapper.toResponseDto(updated);
 	}
 	
 	@Transactional
 	@Override
 	public PatientResponseDTO getPatientById(Long id) {
-		logger.info("Fetching patient by Id: {}", id);
+		
+		logger.info("Request to retrieve patient by ID [{}]", id);
 		Patient patient = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Patient not found with ID:" + id));
 		return mapper.toResponseDto(patient);
 	}
@@ -54,6 +57,8 @@ public class PatientServiceImpl implements PatientService {
 	@Transactional
 	@Override
 	public List<PatientResponseDTO> listAllPatient() {
+		
+		logger.info("Request to list all patients");
 		List<Patient> patients = repository.findAll();
 		return patients.stream()
 			.map(mapper::toResponseDto)
@@ -63,12 +68,14 @@ public class PatientServiceImpl implements PatientService {
 	@Transactional
 	@Override
 	public void deletePatient(Long id) {
-		logger.info("Deleting patient with ID: {}", id);
+		
+		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		logger.info("Request to delete patient [{}]", id);
 		Patient patient = repository.findById(id)
 			.orElseThrow(() -> new ResourceNotFoundException("Patient not found"));
 		
 		repository.delete(patient);
-		auditLogger.info("Audit: Deleted Patient with ID {}", id);
+		logger.info("Patient [{}] successfully deleted", id);
+		auditLogger.info("Patient [{}] deleted by user [{}]", id, currentUser);
 	}
-	
 }

@@ -113,8 +113,6 @@ public class User implements UserDetails, Serializable {
 	public User() {
 	}
 	
-	
-	
 	public Long getId() {
 		return id;
 	}
