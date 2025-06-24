@@ -1,15 +1,14 @@
 package com.santt4na.health_check.controller.docs;
 
-import com.santt4na.health_check.dto.doctorDTO.DoctorRequestDTO;
-import com.santt4na.health_check.dto.patientDTO.PatientRequestDTO;
 import com.santt4na.health_check.dto.securityDTO.AccountCredentialsDTO;
 import com.santt4na.health_check.dto.securityDTO.DoctorRegistrationDTO;
 import com.santt4na.health_check.dto.securityDTO.PatientRegistrationDTO;
-import com.santt4na.health_check.dto.securityDTO.TokenDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
 public interface AuthControllerDocs {
 	
@@ -52,7 +51,7 @@ public interface AuthControllerDocs {
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
 		}
 	)
-	ResponseEntity<?> registerDoctor(DoctorRegistrationDTO doctor);
+	ResponseEntity<?> registerDoctor(@Valid @RequestBody DoctorRegistrationDTO registrationDTO);
 	
 	@Operation(
 		summary = "Create a new Patient",
@@ -65,5 +64,5 @@ public interface AuthControllerDocs {
 			@ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
 		}
 	)
-	ResponseEntity<?> registerPatient(PatientRegistrationDTO patient);
+	ResponseEntity<?> registerPatient(@Valid @RequestBody PatientRegistrationDTO registrationDTO);
 }

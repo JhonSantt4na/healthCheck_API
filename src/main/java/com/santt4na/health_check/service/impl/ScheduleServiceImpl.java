@@ -18,12 +18,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ScheduleServiceImpl implements ScheduleService {
+public class ScheduleServiceImpl implements ScheduleService  {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Startup.class);
 	private static final Logger auditLogger = LoggerFactory.getLogger("audit");
@@ -35,7 +37,25 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Transactional
 	public ScheduleResponseDTO createSchedule(ScheduleRequestDTO dto) {
 		
-		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		Doctor loggedDoctor = null;
+		
+		try {
+			loggedDoctor = doctorRepository.findByUserUserName(currentUsername)
+				.orElseThrow(() -> new AccessDeniedException("Authenticated user is not a valid doctor"));
+		} catch (AccessDeniedException e) {
+			throw new RuntimeException(e);
+		}
+		
+		if (!loggedDoctor.getId().equals(dto.doctorId())) {
+			try {
+				throw new AccessDeniedException("Not allowed to create scheduling for another doctor");
+			} catch (AccessDeniedException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
 		logger.info("Request to create a new schedule");
 		Doctor doctor = doctorRepository.findById(dto.doctorId())
 			.orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado"));
@@ -49,7 +69,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		Schedule saved = repository.save(schedule);
 		
 		logger.info("Schedule [{}] successfully created", schedule.getId());
-		auditLogger.info("New schedule [{}] created by user [{}]", schedule.getId(), currentUser);
+		auditLogger.info("New schedule [{}] created by user [{}]", schedule.getId(), currentUsername);
 		return ScheduleResponseDTO.fromEntity(saved);
 	}
 	

@@ -1,5 +1,6 @@
 package com.santt4na.health_check.controller;
 
+import com.santt4na.health_check.controller.docs.AppointmentControllerDocs;
 import com.santt4na.health_check.dto.scheduleDTO.ScheduleResponseDTO;
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentRequestDTO;
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentResponseDTO;
@@ -19,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/appointments")
 @RequiredArgsConstructor
-public class AppointmentController {
+public class AppointmentController implements AppointmentControllerDocs {
 	
 	private final AppointmentService appointmentService;
 	private final ScheduleService scheduleService;
@@ -34,8 +35,8 @@ public class AppointmentController {
 	}
 	
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Override
 	public ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable Long id, @Valid @RequestBody AppointmentUpdateDTO dto) {
-		
 		AppointmentResponseDTO updated = appointmentService.updateAppointment(id, dto);
 		return ResponseEntity.ok(updated);
 	}

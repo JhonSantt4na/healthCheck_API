@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-@Tag(name = "Schedule Controller", description = "Operations for managing doctor schedules")
+@Tag(name = "Schedule", description = "Operations for managing doctor schedules")
 public interface ScheduleControllerDocs {
 	
 	@Operation(summary = "List all schedules", description = "Retrieve a list of all schedules")

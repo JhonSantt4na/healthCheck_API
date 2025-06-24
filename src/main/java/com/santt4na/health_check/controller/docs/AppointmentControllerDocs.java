@@ -2,12 +2,14 @@ package com.santt4na.health_check.controller.docs;
 
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentRequestDTO;
 import com.santt4na.health_check.dto.appointmentDTO.AppointmentResponseDTO;
+import com.santt4na.health_check.dto.appointmentDTO.AppointmentUpdateDTO;
 import com.santt4na.health_check.dto.scheduleDTO.ScheduleRequestDTO;
 import com.santt4na.health_check.dto.scheduleDTO.ScheduleResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +41,7 @@ public interface AppointmentControllerDocs {
 			@ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content)
 		}
 	)
-	ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable Long id, @RequestBody AppointmentRequestDTO dto);
+	ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable Long id, @Valid @RequestBody AppointmentUpdateDTO dto);
 	
 	@Operation(
 		summary = "Cancel appointment with description",

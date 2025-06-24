@@ -62,15 +62,14 @@ public class securityConfig {
 				.requestMatchers(
 					"/auth/signin",
 					"/auth/refresh/**",
-					"/auth/register/doctor",
-					"/auth/register/patient",
+					"/auth/register/doctor",  //remove after
+					"/auth/register/patient", //remove after
 					"/swagger-ui/**",
 					"/v3/api-docs/**",
 					"/actuator/health",
 					"/actuator/info"
 				).permitAll()
 				
-				.requestMatchers("/api/doctor", "/api/doctor/{id}").hasRole("DOCTOR")
 				.requestMatchers("/api/schedules/**").hasRole("DOCTOR")
 				.requestMatchers("/api/appointments/patient/**").hasRole("PATIENT")
 				.requestMatchers("/api/appointments").hasRole("PATIENT")
